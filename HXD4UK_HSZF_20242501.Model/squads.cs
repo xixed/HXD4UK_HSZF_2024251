@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HXD4UK_HSZF_20242501.Model
+{
+    public class squads
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set;  }
+        public string Name { get; set; }
+        public string Commander { get; set; }
+
+        public ICollection<clones> Clones { get; set; }
+
+        public squads(int id, string name, string commander)
+        {
+            Id = id;
+            Name = name;
+            Commander = commander;
+        }
+        public squads()
+        { }
+    }
+}

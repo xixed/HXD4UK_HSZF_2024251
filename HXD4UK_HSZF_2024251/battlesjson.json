@@ -1,0 +1,52 @@
+﻿[
+  {
+    "id": 1,
+    "name": "Battle of Umbara",
+    "location": "Umbara",
+    "date": "21 BBY",
+    "clones": [ 1, 3, 4, 5, 8, 9, 10 ]
+  },
+  {
+    "id": 2,
+    "name": "Battle of Kamino",
+    "location": "Kamino",
+    "date": "22 BBY",
+    "clones": [ 1, 2, 3, 4, 5, 8, 9 ]
+  },
+  {
+    "id": 3,
+    "name": "Battle of Geonosis",
+    "location": "Geonosis",
+    "date": "22 BBY",
+    "clones": [ 2, 6, 7, 1, 3, 5 ]
+  },
+  {
+    "id": 4,
+    "name": "Battle of Felucia",
+    "location": "Felucia",
+    "date": "19 BBY",
+    "clones": [ 1, 2, 3, 5, 8 ]
+  },
+  {
+    "id": 5,
+    "name": "Battle of Sarrish",
+    "location": "Sarrish",
+    "date": "21 BBY",
+    "clones": [ 11, 3, 4 ]
+  },
+  {
+    "id": 6,
+    "name": "Battle of Christophsis",
+    "location": "Christophsis",
+    "date": "22 BBY",
+    "clones": [ 1, 2, 6, 7, 12 ]
+  },
+  {
+    "id": 7,
+    "name": "Battle of Abafar",
+    "location": "Abafar",
+    "date": "21 BBY",
+    "clones": [ 11 ]
+  }
+
+]

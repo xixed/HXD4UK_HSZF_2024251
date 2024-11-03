@@ -1,0 +1,86 @@
+﻿[
+  {
+    "id": 1,
+    "name": "Captain Rex",
+    "designation": "CT-7567",
+    "rank": "Captain",
+    "squad_id": 1
+  },
+  {
+    "id": 2,
+    "name": "Commander Cody",
+    "designation": "CC-2224",
+    "rank": "Commander",
+    "squad_id": 2
+  },
+  {
+    "id": 3,
+    "name": "Fives",
+    "designation": "CT-5555",
+    "rank": "ARC Trooper",
+    "squad_id": 1
+  },
+  {
+    "id": 4,
+    "name": "Echo",
+    "designation": "CT-1409",
+    "rank": "ARC Trooper",
+    "squad_id": 1
+  },
+  {
+    "id": 5,
+    "name": "Jesse",
+    "designation": "CT-5597",
+    "rank": "Clone Trooper",
+    "squad_id": 1
+  },
+  {
+    "id": 6,
+    "name": "Waxer",
+    "designation": "CT-7569",
+    "rank": "Clone Trooper",
+    "squad_id": 2
+  },
+  {
+    "id": 7,
+    "name": "Boil",
+    "designation": "CT-6734",
+    "rank": "Clone Trooper",
+    "squad_id": 2
+  },
+  {
+    "id": 8,
+    "name": "Hardcase",
+    "designation": "CT-2010",
+    "rank": "Clone Trooper",
+    "squad_id": 1
+  },
+  {
+    "id": 9,
+    "name": "Dogma",
+    "designation": "CT-4636",
+    "rank": "Clone Trooper",
+    "squad_id": 1
+  },
+  {
+    "id": 10,
+    "name": "Tup",
+    "designation": "CT-5385",
+    "rank": "Clone Trooper",
+    "squad_id": 1
+  },
+  {
+    "id": 11,
+    "name": "Gregor",
+    "designation": "CC-5576-39",
+    "rank": "Clone Commando",
+    "squad_id": 3
+  },
+  {
+    "id": 12,
+    "name": "Wolf",
+    "designation": "CC-3636",
+    "rank": "Commander",
+    "squad_id": 3
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "501st Legion",
+    "commander": "Anakin Skywalker"
+  },
+  {
+    "id": 2,
+    "name": "212th Attack Battalion",
+    "commander": "Obi-Wan Kenobi"
+  },
+  {
+    "id": 3,
+    "name": "Wolfpack",
+    "commander": "Plo Koon"
+  }
+
+]
+
+
