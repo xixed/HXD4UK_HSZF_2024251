@@ -10,7 +10,7 @@ namespace HXD4UK_HSZF_20242501.Model
 {
     public class battlestoclones
     {
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key,DatabaseGenerated(DatabaseGeneratedOption.None)]
 
         public int Id { get; set; } 
         public ICollection<Battles> Battles { get; set; }

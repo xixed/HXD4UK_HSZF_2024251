@@ -11,10 +11,16 @@ namespace HXD4UK_HSZF_2024251
         {
             KlonokHaborujadbcontext klonokHaborujadbcontext=new KlonokHaborujadbcontext();
             var clones = JsonConvert.DeserializeObject<List<clones>>(File.ReadAllText("clonesjson.json"));
-            
+            var battles = JsonConvert.DeserializeObject<List<Battles>>(File.ReadAllText("battlesjson.json"));
+            var squads = JsonConvert.DeserializeObject<List<squads>>(File.ReadAllText("squadsjson.json"));
+
             Console.WriteLine(clones.Count);
 
-            klonokHaborujadbcontext.Clones.Add(clones[1]);
+            klonokHaborujadbcontext.Clones.AddRange(clones);
+            klonokHaborujadbcontext.Battles.AddRange(battles);
+            klonokHaborujadbcontext.Squads.AddRange(squads);
+            klonokHaborujadbcontext.Battlestoclones.AddRange();
+
             klonokHaborujadbcontext.SaveChanges();
 
             ;
