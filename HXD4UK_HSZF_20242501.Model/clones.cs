@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HXD4UK_HSZF_20242501.Model
 {
-    public class clones
+    public class Clones
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
@@ -16,11 +16,11 @@ namespace HXD4UK_HSZF_20242501.Model
 
         public int Squad_id { get; set;}
 
-        public squads Squad { get; set; }
+        public Squads Squad { get; set; }
         
-        public ICollection<battlestoclones> Battles { get; set; }
+        public ICollection<Battlestoclones> Battles { get; set; }
 
-        public clones(int id, string name, string designation, string rank, int squad_Id)
+        public Clones(int id, string name, string designation, string rank, int squad_Id)
         {
             Id = id;
             Name = name;
@@ -28,7 +28,7 @@ namespace HXD4UK_HSZF_20242501.Model
             Rank = rank;
             Squad_id = squad_Id;
         }
-        public clones()
+        public Clones()
         { }
     }
 }

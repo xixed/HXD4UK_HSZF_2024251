@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace HXD4UK_HSZF_20242501.Model
 {
-    public class battlestoclones
+    public class Battlestoclones
     {
         public int CloneId { get; set; }
-        public clones clones { get; set; }
+        public Clones clones { get; set; }
 
         public int BattleId { get; set; }
 

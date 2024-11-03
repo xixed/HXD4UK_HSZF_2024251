@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace HXD4UK_HSZF_20242501.Model
 {
-    public class squads
+    public class Squads
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set;  }
         public string Name { get; set; }
         public string Commander { get; set; }
 
-        public ICollection<clones> Clones { get; set; }
+        public ICollection<Clones> Clones { get; set; }
 
-        public squads(int id, string name, string commander)
+        public Squads(int id, string name, string commander)
         {
             Id = id;
             Name = name;
@@ -25,7 +25,7 @@ namespace HXD4UK_HSZF_20242501.Model
 
             
         }
-        public squads()
+        public Squads()
         {
             
         }
