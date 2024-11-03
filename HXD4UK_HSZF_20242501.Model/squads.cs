@@ -22,8 +22,12 @@ namespace HXD4UK_HSZF_20242501.Model
             Id = id;
             Name = name;
             Commander = commander;
+
+            
         }
         public squads()
-        { }
+        {
+            
+        }
     }
 }

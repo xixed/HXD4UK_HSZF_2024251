@@ -19,7 +19,7 @@ namespace HXD4UK_HSZF_2024251
             klonokHaborujadbcontext.Clones.AddRange(clones);
             klonokHaborujadbcontext.Battles.AddRange(battles);
             klonokHaborujadbcontext.Squads.AddRange(squads);
-            klonokHaborujadbcontext.Battlestoclones.AddRange();
+            
 
             klonokHaborujadbcontext.SaveChanges();
 

@@ -10,7 +10,7 @@ namespace HXD4UK_HSZF_20242501.Persistence.MsSql
         public DbSet<clones> Clones { get; set; }
         public DbSet<squads> Squads { get; set; }
 
-        public DbSet<battlestoclones> Battlestoclones { get; set; }
+        //public DbSet<battlestoclones> Battlestoclones { get; set; }
 
         public KlonokHaborujadbcontext()
         {
@@ -25,6 +25,33 @@ namespace HXD4UK_HSZF_20242501.Persistence.MsSql
             optionsBuilder.UseSqlServer(connStr);
             base.OnConfiguring(optionsBuilder);
         }
-        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            
+            
+
+
+            modelBuilder.Entity<clones>()
+                .HasOne(s => s.Squad).WithMany(c => c.Clones).HasForeignKey(c => c.Squad_id);
+
+
+
+            modelBuilder.Entity<battlestoclones>()
+                .HasKey(bc => new { bc.CloneId, bc.BattleId });
+            modelBuilder.Entity<battlestoclones>()
+                .HasOne(bc => bc.clones)
+                .WithMany(b => b.Battles)
+                .HasForeignKey(bc => bc.CloneId);
+            modelBuilder.Entity<battlestoclones>()
+                .HasOne(bc => bc.battles)
+                .WithMany(c => c.Clones1)
+                .HasForeignKey(bc => bc.BattleId);
+
+
+
+
+
+        }
+
     }
 }
