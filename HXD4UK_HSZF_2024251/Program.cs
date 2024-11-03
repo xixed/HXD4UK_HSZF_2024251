@@ -13,6 +13,7 @@ namespace HXD4UK_HSZF_2024251
             var clones = JsonConvert.DeserializeObject<List<clones>>(File.ReadAllText("clonesjson.json"));
             var battles = JsonConvert.DeserializeObject<List<Battles>>(File.ReadAllText("battlesjson.json"));
             var squads = JsonConvert.DeserializeObject<List<squads>>(File.ReadAllText("squadsjson.json"));
+            ;
 
             Console.WriteLine(clones.Count);
 
