@@ -22,7 +22,7 @@ namespace HXD4UK_HSZF_20242501.Model
 
         public Clones(int id, string name, string designation, string rank, int squad_Id)
         {
-            Id = id;
+            this.Id = id;
             Name = name;
             Designation = designation;
             Rank = rank;
