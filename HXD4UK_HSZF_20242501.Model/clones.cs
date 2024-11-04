@@ -18,17 +18,30 @@ namespace HXD4UK_HSZF_20242501.Model
 
         public Squads Squad { get; set; }
         
+        public int Id_counter { get; set;}
+        
         public ICollection<Battlestoclones> Battles { get; set; }
 
         public Clones(int id, string name, string designation, string rank, int squad_Id)
         {
-            this.Id = id;
+            Id = id;
             Name = name;
             Designation = designation;
             Rank = rank;
             Squad_id = squad_Id;
+            Id_counter++;
         }
+        public Clones( string name, string designation, string rank, int squad_Id)
+        {
+            
+            Name = name;
+            Designation = designation;
+            Rank = rank;
+            Squad_id = squad_Id;
+            Id_counter++;
+        }
+
         public Clones()
-        { }
+        { Id_counter++; }
     }
 }

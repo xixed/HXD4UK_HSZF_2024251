@@ -35,6 +35,7 @@ namespace HXD4UK_HSZF_20242501.Persistence.MsSql
             var clone = KlonokHaborujadbcontext.Clones.FirstOrDefault(s => s.Id == id);
             KlonokHaborujadbcontext.Clones.Remove(clone);
             KlonokHaborujadbcontext.SaveChanges();
+            
         }
 
         

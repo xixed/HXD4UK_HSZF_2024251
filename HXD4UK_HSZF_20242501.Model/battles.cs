@@ -21,6 +21,8 @@ namespace HXD4UK_HSZF_20242501.Model
 
         public int[] Clones { get; set; }
 
+        public int Id_Counter { get; set; }
+
         public virtual ICollection<Battlestoclones> Clones1 { get; set; }
 
         public Battles(int id, string name, string location, string date, int[] clones)
@@ -30,10 +32,21 @@ namespace HXD4UK_HSZF_20242501.Model
             Location = location;
             Date = date;
             Clones = clones;
+            Id_Counter++;
+        }
+        public Battles( string name, string location, string date, int[] clones)
+        {
+            
+            Name = name;
+            Location = location;
+            Date = date;
+            Clones = clones;
+            Id_Counter++;
         }
 
         public Battles()
         {
+            Id_Counter++;
         }
     }
 }

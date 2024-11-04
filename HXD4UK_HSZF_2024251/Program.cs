@@ -13,9 +13,6 @@ namespace HXD4UK_HSZF_2024251
 
             
 
-
-            
-
         }
 
         private static void Seed()
@@ -31,11 +28,17 @@ namespace HXD4UK_HSZF_2024251
             klonokHaborujadbcontext.Battles.AddRange(battles);
             klonokHaborujadbcontext.Squads.AddRange(squads);
 
-            Repository repository = new(klonokHaborujadbcontext);
+            
 
 
 
             klonokHaborujadbcontext.SaveChanges();
+
+            Menu menu = new Menu();
+
+            menu.Run(klonokHaborujadbcontext);
+            
+
         }
     }
 }
