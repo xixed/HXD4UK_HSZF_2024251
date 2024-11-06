@@ -9,18 +9,21 @@ namespace HXD4UK_HSZF_20242501.Persistence.MsSql
         public DbSet<Battles> Battles { get; set; }
         public DbSet<Clones> Clones { get; set; }
         public DbSet<Squads> Squads { get; set; }
+        string connStr;
 
         public DbSet<Battlestoclones> Battlestoclones { get; set; }
 
-        public KlonokHaborujadbcontext()
+        public KlonokHaborujadbcontext(string connStr)
         {
+            this.connStr = connStr;
             Database.EnsureDeleted();
             Database.EnsureCreated();
+            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=KlonokHaborujadbcontext;Integrated Security=True;MultipleActiveResultSets=true";
+            
 
             optionsBuilder.UseSqlServer(connStr);
             base.OnConfiguring(optionsBuilder);

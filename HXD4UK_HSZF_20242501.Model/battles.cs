@@ -11,19 +11,19 @@ namespace HXD4UK_HSZF_20242501.Model
     public class Battles
     {
         [Key,DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public string Location { get; set; }
+        public string? Location { get; set; }
 
-        public string Date { get; set; }
+        public string? Date { get; set; }
 
-        public int[] Clones { get; set; }
+        public int[]? Clones { get; set; }
 
-        public int Id_Counter { get; set; }
+        public int? Id_Counter = 7;
 
-        public virtual ICollection<Battlestoclones> Clones1 { get; set; }
+        public virtual ICollection<Battlestoclones>? Clones1 { get; set; }
 
         public Battles(int id, string name, string location, string date, int[] clones)
         {
@@ -42,11 +42,17 @@ namespace HXD4UK_HSZF_20242501.Model
             Date = date;
             Clones = clones;
             Id_Counter++;
+            Id = Id_Counter;
+            
+           
         }
 
         public Battles()
         {
             Id_Counter++;
+            Id = Id_Counter;
+            
+            
         }
     }
 }
