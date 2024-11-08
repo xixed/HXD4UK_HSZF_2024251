@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using static Azure.Core.HttpHeader;
+
 
 namespace HXD4UK_HSZF_2024251
 {
@@ -21,13 +21,19 @@ namespace HXD4UK_HSZF_2024251
         public SquadMethods SquadMethods;
         public CloneMethods CloneMethods;
         public BattleMethods BattleMethods;
+        public Biggest Biggest;
+        public _501st_Legion _501St_Legion;
+        
 
-        public Menu(AllDataQuerie allDataQuerie, SquadMethods squadMethods, CloneMethods cloneMethods, BattleMethods battleMethods)
+        public Menu(AllDataQuerie allDataQuerie, SquadMethods squadMethods, CloneMethods cloneMethods, BattleMethods battleMethods, Biggest biggest, _501st_Legion _501St_Legion)
         {
-            this.AllDataQuerie = allDataQuerie;
+            AllDataQuerie = allDataQuerie;
             SquadMethods = squadMethods;
             CloneMethods = cloneMethods;
             BattleMethods = battleMethods;
+            Biggest = biggest;
+            this._501St_Legion = _501St_Legion;
+            
         }
 
 
@@ -267,22 +273,11 @@ namespace HXD4UK_HSZF_2024251
         //Squad_Add
 
 
-        //Nem jo meg a id!!!!!!!!!!
+       
         public void SquadAdd(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
-            Console.WriteLine("Name your squad:");
-            string name=Console.ReadLine();
-            Console.WriteLine("Give a commander to your squad:");
-            string commander = Console.ReadLine();
-
-            Squads squads = new Squads(name,commander);
-
-            klonokHaborujadbcontext.Squads.Add(squads);
-            klonokHaborujadbcontext.SaveChanges();
-
-            Console.WriteLine("New Squad inserted");
-            Console.WriteLine();
+            SquadMethods.Add();
             Console.WriteLine("Do you want to add another[1] or go back[2]?");
 
             while (true)
@@ -305,43 +300,11 @@ namespace HXD4UK_HSZF_2024251
 
         //Clone_Add
 
-        //Nem jo meg a id!!!!!!!!!! int hosszusag
+        //int hosszusag
         public void CloneAdd(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
-            Console.WriteLine("Name your clone:");
-            string name = Console.ReadLine();
-            Console.WriteLine("Give a designation to your clone:");
-            string desigantion = Console.ReadLine();
-            Console.WriteLine("Give a rank to your clone:");
-            string rank = Console.ReadLine();
-            Console.WriteLine("Choose a Squad to be your clone in:");
-            int options = 0;
-            foreach (var item in klonokHaborujadbcontext.Squads)
-            {
-                options++;
-                Console.Write($"{item.Name} [{item.Id}], ");
-            }
-            Console.WriteLine();
-            int squad_id;
-            while(true)
-            {
-                
-                squad_id = int.Parse(Console.ReadLine());
-
-                if (squad_id<=options)
-                    break;
-                else
-                    Console.WriteLine("There are no squad with this number try again");
-            }
-            Clones clones = new Clones(name,desigantion,rank,squad_id);
-
-            klonokHaborujadbcontext.Clones.Add(clones);
-
-            klonokHaborujadbcontext.SaveChanges();
-
-            Console.WriteLine("New Clone inserted");
-            Console.WriteLine();
+            CloneMethods.Add();
             Console.WriteLine("Do you want to add another[1] or go back[2]?");
 
             while (true)
@@ -366,68 +329,11 @@ namespace HXD4UK_HSZF_2024251
 
         //Battle_Add
 
-        //Nem jo meg a id!!!!!!!!!!   tobbszor meg lehet adni ugyanazt a klon nemtudom baj e!!!
+        //  tobbszor meg lehet adni ugyanazt a klon nemtudom baj e!!!
         public void BattleAdd(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
-            Console.WriteLine("Name your battle:");
-            string name = Console.ReadLine();
-            Console.WriteLine("Name the location where it was:");
-            string location = Console.ReadLine();
-            Console.WriteLine("Name the time when it was:");
-            string date = Console.ReadLine();
-            Console.WriteLine($"How many different clones fought in this battle(max:{klonokHaborujadbcontext.Clones.Count()}):");
-            int size;
-            while (true)
-            {
-                Console.WriteLine();
-                size = int.Parse(Console.ReadLine());
-
-                if (0<size && size <= klonokHaborujadbcontext.Clones.Count())
-                    break;
-                else
-                    Console.WriteLine("Wrong data try again");
-
-            }
-
-            Console.WriteLine($"Choose that much({size})");
-
-            int options = 0;
-            foreach (var item in klonokHaborujadbcontext.Clones)
-            {
-                options++;
-                Console.Write($"{item.Name} [{item.Id}], ");
-            }
-            int[] clones = new int[size];
-            Console.WriteLine();
-            for (int j = 1; j <= size; j++)
-            {
-                while (true)
-                {
-                        Console.WriteLine($"{j}. clone");
-                        clones[j-1] = int.Parse(Console.ReadLine());
-
-                        if (clones[j-1]<=options)
-                            break;
-                        else
-                            Console.WriteLine("There are no clone with this number try again");
-                    
-                }
-
-            }
-
-
-            Console.WriteLine();
-            
-
-            Battles battle = new Battles(name, location, date, clones);
-
-            klonokHaborujadbcontext.Battles.Add(battle);
-
-            klonokHaborujadbcontext.SaveChanges();
-
-            Console.WriteLine("New Battle inserted");
-            Console.WriteLine();
+            BattleMethods.Add();
             Console.WriteLine("Do you want to add another[1] or go back[2]?");
 
             while (true)
@@ -488,26 +394,12 @@ namespace HXD4UK_HSZF_2024251
 
 
         //Squad Delete
-        //wrong input nincs kezelve
+        
         public void SquadDel(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
-            Console.WriteLine("Choose wich Squad do you want to delete:");
+            SquadMethods.Remove();
             
-            foreach (var item in klonokHaborujadbcontext.Squads)
-            {
-                
-                Console.Write($"{item.Name} [{item.Id}], ");
-            }
-            Console.WriteLine();
-            int index=int.Parse(Console.ReadLine());
-
-            var delete = klonokHaborujadbcontext.Squads.FirstOrDefault(s=>s.Id == index);
-
-             klonokHaborujadbcontext.Squads.Remove(delete);
-            klonokHaborujadbcontext.SaveChanges();
-            Console.WriteLine();
-            Console.WriteLine("Squad deteled");
             Console.WriteLine("Do you want to delete another[1] or go back[2]");
             while (true)
             {
@@ -526,26 +418,11 @@ namespace HXD4UK_HSZF_2024251
         }
 
         //Clone Delete
-        //wrong input nincs kezelve
+        
         public void CloneDel(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
-            Console.WriteLine("Choose wich Clone do you want to delete:");
-            
-            foreach (var item in klonokHaborujadbcontext.Clones)
-            {
-                
-                Console.Write($"{item.Name} [{item.Id}], ");
-            }
-            Console.WriteLine();
-            int index = int.Parse(Console.ReadLine());
-
-            var delete = klonokHaborujadbcontext.Clones.FirstOrDefault(s => s.Id == index);
-
-            klonokHaborujadbcontext.Clones.Remove(delete);
-            klonokHaborujadbcontext.SaveChanges();
-            Console.WriteLine();
-            Console.WriteLine("Clone deteled");
+            CloneMethods.Remove();
             Console.WriteLine("Do you want to delete another[1] or go back[2]");
             while (true)
             {
@@ -563,26 +440,11 @@ namespace HXD4UK_HSZF_2024251
         }
 
         //Battle Delete
-        //wrong input nincs kezelve
+        
         public void BattleDel(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
-            Console.WriteLine("Choose wich Battle do you want to delete:");
-            
-            foreach (var item in klonokHaborujadbcontext.Battles)
-            {
-                
-                Console.Write($"{item.Name} [{item.Id}], ");
-            }
-            Console.WriteLine();
-            int index = int.Parse(Console.ReadLine());
-
-            var delete = klonokHaborujadbcontext.Battles.FirstOrDefault(s => s.Id == index);
-
-            klonokHaborujadbcontext.Battles.Remove(delete);
-            klonokHaborujadbcontext.SaveChanges();
-            Console.WriteLine();
-            Console.WriteLine("Battle deteled");
+            BattleMethods.Remove();
             Console.WriteLine("Do you want to delete another[1] or go back[2]");
             while (true)
             {
@@ -641,58 +503,11 @@ namespace HXD4UK_HSZF_2024251
 
         //Squad Update
 
-        //wrong input kezeles
+        
         public void SquadUpdate(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
-            Console.WriteLine("Choose a Squad you want to update");
-            Console.WriteLine();
-            int options = 0;
-            foreach (var item in klonokHaborujadbcontext.Squads)
-            {
-                options++;
-                Console.Write($"{item.Name} [{item.Id}], ");
-            }
-            Console.WriteLine();
-            int index;
-            while (true)
-            {
-
-                index = int.Parse(Console.ReadLine());
-
-                if (index <= options)
-                    break;
-                else
-                    Console.WriteLine("There are no squad with this number try again");
-            }
-            Console.WriteLine();
-            Console.WriteLine("Which item do you want to change?");
-            var squad = klonokHaborujadbcontext.Squads.FirstOrDefault(s => s.Id == index);
-            Console.WriteLine($"{squad.Name}[1]");
-            Console.WriteLine($"{squad.Commander}[2]");
-            while (true)
-            {
-                var key = Console.ReadKey(true).Key;
-
-                if (key == ConsoleKey.D1)
-                {
-                    Console.WriteLine("Changin name...");
-                    string name = Console.ReadLine();
-                    squad.Name = name;
-                    klonokHaborujadbcontext.SaveChanges();
-                    Console.WriteLine("Changes saved");
-                    break;
-                }
-                else if (key == ConsoleKey.D2)
-                {
-                    Console.WriteLine("Changin commander...");
-                    string commander = Console.ReadLine();
-                    squad.Commander = commander;
-                    klonokHaborujadbcontext.SaveChanges();
-                    Console.WriteLine("Changes saved");
-                    break;
-                }
-            }
+            SquadMethods.Update();
             Console.WriteLine("Do you want to change something else[1] or go back[2]?");
             while (true)
             {
@@ -715,79 +530,7 @@ namespace HXD4UK_HSZF_2024251
         public void CloneUpdate(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
-            Console.WriteLine("Choose a Clone you want to update");
-            Console.WriteLine();
-            int options = 0;
-            foreach (var item in klonokHaborujadbcontext.Clones)
-            {
-                options++;
-                Console.Write($"{item.Name} [{item.Id}], ");
-            }
-            Console.WriteLine();
-            int index;
-            while (true)
-            {
-
-                index = int.Parse(Console.ReadLine());
-
-                if (index <= options)
-                    break;
-                else
-                    Console.WriteLine("There are no clone with this number try again");
-            }
-            Console.WriteLine();
-            Console.WriteLine("Which item do you want to change?");
-            var clone = klonokHaborujadbcontext.Clones.FirstOrDefault(s => s.Id == index);
-            Console.WriteLine($"{clone.Name}[1]");
-            Console.WriteLine($"{clone.Designation}[2]");
-            Console.WriteLine($"{clone.Rank}[3]");
-            Console.WriteLine($"{clone.Squad_id}[4]");
-            while (true)
-            {
-                var key = Console.ReadKey(true).Key;
-
-                if (key == ConsoleKey.D1)
-                {
-                    Console.WriteLine("Changin name...");
-                    string name = Console.ReadLine();
-                    clone.Name = name;
-                    klonokHaborujadbcontext.SaveChanges();
-                    Console.WriteLine("Changes saved");
-                    break;
-                }
-                else if (key == ConsoleKey.D2)
-                {
-                    Console.WriteLine("Changin designation...");
-                    string desigantion = Console.ReadLine();
-                    clone.Designation = desigantion;
-                    klonokHaborujadbcontext.SaveChanges();
-                    Console.WriteLine("Changes saved");
-                    break;
-                }
-                else if (key == ConsoleKey.D3)
-                {
-                    Console.WriteLine("Changin rank...");
-                    string rank = Console.ReadLine();
-                    clone.Rank = rank;
-                    klonokHaborujadbcontext.SaveChanges();
-                    Console.WriteLine("Changes saved");
-                    break;
-                }
-                else if (key == ConsoleKey.D4)
-                {
-                    Console.WriteLine("Changin squad...");
-                    Console.WriteLine("Choose another squad:");
-                    foreach (var item in klonokHaborujadbcontext.Squads)
-                    {
-                        Console.Write($"{item.Name}, [{item.Id}] ");
-                    }
-                    int squad = int.Parse(Console.ReadLine());
-                    clone.Squad_id = squad;
-                    klonokHaborujadbcontext.SaveChanges();
-                    Console.WriteLine("Changes saved");
-                    break;
-                }
-            }
+            CloneMethods.Update();
             Console.WriteLine("Do you want to change something else[1] or go back[2]?");
             while (true)
             {
@@ -809,6 +552,21 @@ namespace HXD4UK_HSZF_2024251
         public void BattleUpdate(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
+            BattleMethods.Update();
+            Console.WriteLine("Do you want to change something else[1] or go back[2]?");
+            while (true)
+            {
+                var key = Console.ReadKey(true).Key;
+
+                if (key == ConsoleKey.D1)
+                {
+                    BattleUpdate(klonokHaborujadbcontext);
+                }
+                else if (key == ConsoleKey.D2)
+                {
+                    UpdateMenu(klonokHaborujadbcontext);
+                }
+            }
         }
 
         //Queries
@@ -878,36 +636,158 @@ namespace HXD4UK_HSZF_2024251
         {
             Console.Clear();
             AllDataQuerie.AllData();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Back[Backspace]");
+            Console.WriteLine("Main Menu[Esc]");
+
+
+            while (true)
+            {
+                var key = Console.ReadKey(true).Key;
+
+                if (key == ConsoleKey.Backspace)
+                {
+                    QueriesMenu(klonokHaborujadbcontext);
+                }
+                else if (key == ConsoleKey.Escape)
+                {
+                    MainMenu(klonokHaborujadbcontext);
+                }
+            }
         }
 
         //Biggest battle
         public void BiggestBattle(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
-            
+            Console.Clear();
+            Console.WriteLine("The biggest battle was:");
+            Biggest.Big();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Back[Backspace]");
+            Console.WriteLine("Main Menu[Esc]");
+
+
+            while (true)
+            {
+                var key = Console.ReadKey(true).Key;
+
+                if (key == ConsoleKey.Backspace)
+                {
+                    QueriesMenu(klonokHaborujadbcontext);
+                }
+                else if (key == ConsoleKey.Escape)
+                {
+                    MainMenu(klonokHaborujadbcontext);
+                }
+            }
         }
 
         //501st Legion
         public void Legion(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
-            
+            Console.Clear();
+            Console.WriteLine("'501 Legion' clones:");
+            _501St_Legion._501_Legion();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Back[Backspace]");
+            Console.WriteLine("Main Menu[Esc]");
+
+
+            while (true)
+            {
+                var key = Console.ReadKey(true).Key;
+
+                if (key == ConsoleKey.Backspace)
+                {
+                    QueriesMenu(klonokHaborujadbcontext);
+                }
+                else if (key == ConsoleKey.Escape)
+                {
+                    MainMenu(klonokHaborujadbcontext);
+                }
+            }
         }
 
         //501st min 3 Battle
         public void Min3(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
-            
+            Console.Clear();
+            Console.WriteLine("Battle(s) where at least 3 clones participated form '501st Legion':");
+
+            _501St_Legion._3_Atleast();
+
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Back[Backspace]");
+            Console.WriteLine("Main Menu[Esc]");
+
+
+            while (true)
+            {
+                var key = Console.ReadKey(true).Key;
+
+                if (key == ConsoleKey.Backspace)
+                {
+                    QueriesMenu(klonokHaborujadbcontext);
+                }
+                else if (key == ConsoleKey.Escape)
+                {
+                    MainMenu(klonokHaborujadbcontext);
+                }
+            }
         }
 
         //Kaminoi
         public void Kaminoi(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
-            
+
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Back[Backspace]");
+            Console.WriteLine("Main Menu[Esc]");
+
+
+            while (true)
+            {
+                var key = Console.ReadKey(true).Key;
+
+                if (key == ConsoleKey.Backspace)
+                {
+                    QueriesMenu(klonokHaborujadbcontext);
+                }
+                else if (key == ConsoleKey.Escape)
+                {
+                    MainMenu(klonokHaborujadbcontext);
+                }
+            }
         }
 
         //Battle of Geonosis
         public void Geonosis(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
-            
+
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Back[Backspace]");
+            Console.WriteLine("Main Menu[Esc]");
+
+
+            while (true)
+            {
+                var key = Console.ReadKey(true).Key;
+
+                if (key == ConsoleKey.Backspace)
+                {
+                    QueriesMenu(klonokHaborujadbcontext);
+                }
+                else if (key == ConsoleKey.Escape)
+                {
+                    MainMenu(klonokHaborujadbcontext);
+                }
+            }
         }
 
         //clonesparty
@@ -915,6 +795,25 @@ namespace HXD4UK_HSZF_2024251
         public void ClonesParty(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
 
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Back[Backspace]");
+            Console.WriteLine("Main Menu[Esc]");
+
+
+            while (true)
+            {
+                var key = Console.ReadKey(true).Key;
+
+                if (key == ConsoleKey.Backspace)
+                {
+                    QueriesMenu(klonokHaborujadbcontext);
+                }
+                else if (key == ConsoleKey.Escape)
+                {
+                    MainMenu(klonokHaborujadbcontext);
+                }
+            }
         }
 
     }

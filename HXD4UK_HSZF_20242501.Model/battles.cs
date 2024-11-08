@@ -21,7 +21,7 @@ namespace HXD4UK_HSZF_20242501.Model
 
         public int[]? Clones { get; set; }
 
-        public int? Id_Counter = 7;
+        public static int? Id_Counter { get; set; }
 
         public virtual ICollection<Battlestoclones>? Clones1 { get; set; }
 

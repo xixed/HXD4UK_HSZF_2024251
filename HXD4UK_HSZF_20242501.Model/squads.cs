@@ -14,7 +14,7 @@ namespace HXD4UK_HSZF_20242501.Model
         public int Id { get; set;  }
         public string Name { get; set; }
         public string Commander { get; set; }
-        public int Id_Counter { get; set; }
+        public static int Id_Counter { get; set; }
         
 
         public ICollection<Clones> Clones { get; set; }
@@ -36,6 +36,7 @@ namespace HXD4UK_HSZF_20242501.Model
         }
         public Squads()
         {
+            Id = Id_Counter;
             Id_Counter++;
         }
     }

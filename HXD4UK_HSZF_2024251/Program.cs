@@ -35,12 +35,15 @@ namespace HXD4UK_HSZF_2024251
 
             klonokHaborujadbcontext.SaveChanges();
 
+            
             BattleMethods battleMethods = new BattleMethods(klonokHaborujadbcontext);
             CloneMethods cloneMethods = new CloneMethods(klonokHaborujadbcontext);
             SquadMethods squadMethods = new SquadMethods(klonokHaborujadbcontext);
-
+            Biggest biggest = new Biggest(klonokHaborujadbcontext);
             AllDataQuerie allDataQuerie = new AllDataQuerie(klonokHaborujadbcontext,squadMethods,cloneMethods,battleMethods);
-            Menu menu = new Menu(allDataQuerie, squadMethods, cloneMethods, battleMethods);
+            _501st_Legion _501St_Legion = new _501st_Legion(klonokHaborujadbcontext);
+
+            Menu menu = new Menu(allDataQuerie, squadMethods, cloneMethods, battleMethods,biggest,_501St_Legion);
 
             menu.Run(klonokHaborujadbcontext);
             

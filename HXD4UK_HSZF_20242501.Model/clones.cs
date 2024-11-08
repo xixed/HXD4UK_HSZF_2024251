@@ -17,8 +17,8 @@ namespace HXD4UK_HSZF_20242501.Model
         public int Squad_id { get; set;}
 
         public Squads Squad { get; set; }
-        
-        public int Id_counter { get; set;}
+
+        public static int Id_counter { get; set; }
         
         public ICollection<Battlestoclones> Battles { get; set; }
 
@@ -39,9 +39,13 @@ namespace HXD4UK_HSZF_20242501.Model
             Rank = rank;
             Squad_id = squad_Id;
             Id_counter++;
+            Id=Id_counter;
         }
 
         public Clones()
-        { Id_counter++; }
+        { 
+            Id_counter++;
+            Id = Id_counter;
+        }
     }
 }

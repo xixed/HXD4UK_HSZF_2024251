@@ -1,4 +1,5 @@
-﻿using HXD4UK_HSZF_20242501.Persistence.MsSql;
+﻿using HXD4UK_HSZF_20242501.Model;
+using HXD4UK_HSZF_20242501.Persistence.MsSql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,12 @@ namespace HXD4UK_HSZF_20242501.Application
     public class SquadMethods
     {
         KlonokHaborujadbcontext klonokHaborujadbcontext;
+        
 
         public SquadMethods(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             this.klonokHaborujadbcontext = klonokHaborujadbcontext;
+            
         }
 
         public void Data()
@@ -31,17 +34,98 @@ namespace HXD4UK_HSZF_20242501.Application
 
         public void Add()
         {
+            Console.WriteLine("Name your squad:");
+            string name = Console.ReadLine();
+            Console.WriteLine("Give a commander to your squad:");
+            string commander = Console.ReadLine();
 
+            Squads squads = new Squads(name, commander);
+
+            klonokHaborujadbcontext.Squads.Add(squads);
+            klonokHaborujadbcontext.SaveChanges();
+
+            Console.WriteLine("New Squad inserted");
+            Console.WriteLine();
         }
 
         public void Remove()
         {
+            Console.WriteLine("Choose wich Squad do you want to delete:");
 
+            foreach (var item in klonokHaborujadbcontext.Squads)
+            {
+
+                Console.Write($"{item.Name} [{item.Id}], ");
+            }
+            Console.WriteLine();
+            int index = int.Parse(Console.ReadLine());
+
+            var delete = klonokHaborujadbcontext.Squads.FirstOrDefault(s => s.Id == index);
+
+            if (delete==null)
+            {
+                Console.WriteLine("Wrong Id try again");
+                Remove();
+            }
+            else
+            {
+                klonokHaborujadbcontext.Squads.Remove(delete);
+                klonokHaborujadbcontext.SaveChanges();
+                Console.WriteLine();
+                Console.WriteLine("Squad deteled");
+            }
         }
 
         public void Update()
         {
+            Console.WriteLine("Choose a Squad you want to update");
+            Console.WriteLine();
+            int options = 0;
+            foreach (var item in klonokHaborujadbcontext.Squads)
+            {
+                options++;
+                Console.Write($"{item.Name} [{item.Id}], ");
+            }
+            Console.WriteLine();
+            int index;
+            while (true)
+            {
 
+                index = int.Parse(Console.ReadLine());
+
+                if (index <= options)
+                    break;
+                else
+                    Console.WriteLine("There are no squad with this number try again");
+            }
+            Console.WriteLine();
+            Console.WriteLine("Which item do you want to change?");
+            var squad = klonokHaborujadbcontext.Squads.FirstOrDefault(s => s.Id == index);
+            Console.WriteLine($"{squad.Name}[1]");
+            Console.WriteLine($"{squad.Commander}[2]");
+            while (true)
+            {
+                var key = Console.ReadKey(true).Key;
+
+                if (key == ConsoleKey.D1)
+                {
+                    Console.WriteLine("Changin name...");
+                    string name = Console.ReadLine();
+                    squad.Name = name;
+                    klonokHaborujadbcontext.SaveChanges();
+                    Console.WriteLine("Changes saved");
+                    break;
+                }
+                else if (key == ConsoleKey.D2)
+                {
+                    Console.WriteLine("Changin commander...");
+                    string commander = Console.ReadLine();
+                    squad.Commander = commander;
+                    klonokHaborujadbcontext.SaveChanges();
+                    Console.WriteLine("Changes saved");
+                    break;
+                }
+            }
         }
     }
 }
