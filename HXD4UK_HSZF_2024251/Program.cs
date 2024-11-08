@@ -30,7 +30,7 @@ namespace HXD4UK_HSZF_2024251
             klonokHaborujadbcontext.Squads.AddRange(squads);
 
             
-
+            
 
 
             klonokHaborujadbcontext.SaveChanges();
