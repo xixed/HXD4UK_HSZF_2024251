@@ -42,8 +42,10 @@ namespace HXD4UK_HSZF_2024251
             Biggest biggest = new Biggest(klonokHaborujadbcontext);
             AllDataQuerie allDataQuerie = new AllDataQuerie(klonokHaborujadbcontext,squadMethods,cloneMethods,battleMethods);
             _501st_Legion _501St_Legion = new _501st_Legion(klonokHaborujadbcontext);
+            Kamino kamino = new Kamino(klonokHaborujadbcontext);
+            Geonosis geonosis = new Geonosis(klonokHaborujadbcontext);
 
-            Menu menu = new Menu(allDataQuerie, squadMethods, cloneMethods, battleMethods,biggest,_501St_Legion);
+            Menu menu = new Menu(allDataQuerie, squadMethods, cloneMethods, battleMethods,biggest,_501St_Legion, kamino, geonosis);
 
             menu.Run(klonokHaborujadbcontext);
             

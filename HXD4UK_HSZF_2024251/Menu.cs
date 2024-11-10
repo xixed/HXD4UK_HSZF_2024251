@@ -23,9 +23,11 @@ namespace HXD4UK_HSZF_2024251
         public BattleMethods BattleMethods;
         public Biggest Biggest;
         public _501st_Legion _501St_Legion;
-        
+        public Kamino Kamino;
+        public Geonosis geonosis;
 
-        public Menu(AllDataQuerie allDataQuerie, SquadMethods squadMethods, CloneMethods cloneMethods, BattleMethods battleMethods, Biggest biggest, _501st_Legion _501St_Legion)
+
+        public Menu(AllDataQuerie allDataQuerie, SquadMethods squadMethods, CloneMethods cloneMethods, BattleMethods battleMethods, Biggest biggest, _501st_Legion _501St_Legion, Kamino kamino, Geonosis geonosis)
         {
             AllDataQuerie = allDataQuerie;
             SquadMethods = squadMethods;
@@ -33,7 +35,8 @@ namespace HXD4UK_HSZF_2024251
             BattleMethods = battleMethods;
             Biggest = biggest;
             this._501St_Legion = _501St_Legion;
-            
+            Kamino = kamino;
+            this.geonosis = geonosis;
         }
 
 
@@ -743,7 +746,8 @@ namespace HXD4UK_HSZF_2024251
         //Kaminoi
         public void Kaminoi(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
-
+            Console.Clear();
+            Kamino.KaminoBattle();
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Back[Backspace]");
@@ -768,7 +772,8 @@ namespace HXD4UK_HSZF_2024251
         //Battle of Geonosis
         public void Geonosis(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
-
+            Console.Clear();
+            geonosis.Geo();
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Back[Backspace]");
@@ -794,6 +799,7 @@ namespace HXD4UK_HSZF_2024251
 
         public void ClonesParty(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
+            Console.Clear();
 
             Console.WriteLine();
             Console.WriteLine();

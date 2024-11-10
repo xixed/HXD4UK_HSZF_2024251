@@ -20,9 +20,16 @@ namespace HXD4UK_HSZF_20242501.Application
 
         public void Big()
         {
-            
-            var battle = klonokHaborujadbcontext.Battles.Select(battle=> new { Battle = battle, CloneCount= battle.Clones.Count()}).OrderByDescending(b=>b.CloneCount).FirstOrDefault();
-            Console.WriteLine($"{battle.Battle.Name}");
+
+            var battle = klonokHaborujadbcontext.Battles.Select(battle => new { Battle = battle, CloneCount = battle.Clones.Count() }).OrderByDescending(b => b.CloneCount).FirstOrDefault();
+            if (battle == null)
+            {
+                Console.WriteLine("There are no battle in the database");
+            }
+            else
+            {
+                Console.WriteLine($"{battle.Battle.Name}");
+            }
         }
 
 
