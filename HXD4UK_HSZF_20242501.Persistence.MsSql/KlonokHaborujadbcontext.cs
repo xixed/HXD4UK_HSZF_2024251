@@ -30,29 +30,31 @@ namespace HXD4UK_HSZF_20242501.Persistence.MsSql
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-            
 
 
+
+
+            
             modelBuilder.Entity<Clones>()
-                .HasOne(s => s.Squad).WithMany(c => c.Clones).HasForeignKey(c => c.Squad_id);
+                .HasOne(clone => clone.Squad)
+                .WithMany(squad => squad.Clones)
+                .HasForeignKey(clone => clone.Squad_id);
 
-
-
+            
             modelBuilder.Entity<Battlestoclones>()
                 .HasKey(bc => new { bc.CloneId, bc.BattleId });
+
+            
             modelBuilder.Entity<Battlestoclones>()
-                .HasOne(bc => bc.clones)
-                .WithMany(b => b.Battles)
+                .HasOne(bc => bc.clones)  
+                .WithMany(clone => clone.Battles)
                 .HasForeignKey(bc => bc.CloneId);
+
+            
             modelBuilder.Entity<Battlestoclones>()
-                .HasOne(bc => bc.battles)
-                .WithMany(c => c.Clones1)
+                .HasOne(bc => bc.battles)  
+                .WithMany(battle => battle.Clones1) 
                 .HasForeignKey(bc => bc.BattleId);
-
-
-
-
 
         }
 

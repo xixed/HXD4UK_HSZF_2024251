@@ -44,8 +44,9 @@ namespace HXD4UK_HSZF_2024251
             _501st_Legion _501St_Legion = new _501st_Legion(klonokHaborujadbcontext);
             Kamino kamino = new Kamino(klonokHaborujadbcontext);
             Geonosis geonosis = new Geonosis(klonokHaborujadbcontext);
+            CloneParty cloneParty = new CloneParty(klonokHaborujadbcontext);
 
-            Menu menu = new Menu(allDataQuerie, squadMethods, cloneMethods, battleMethods,biggest,_501St_Legion, kamino, geonosis);
+            Menu menu = new Menu(allDataQuerie, squadMethods, cloneMethods, battleMethods,biggest,_501St_Legion, kamino, geonosis,cloneParty);
 
             menu.Run(klonokHaborujadbcontext);
             
