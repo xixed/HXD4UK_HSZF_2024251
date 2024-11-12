@@ -12,22 +12,18 @@ namespace HXD4UK_HSZF_20242501.Persistence.MsSql
         string connStr;
 
         public DbSet<Battlestoclones> Battlestoclones { get; set; }
+        
+        public event EventHandler<Clones> cloneAdded;
 
-        public KlonokHaborujadbcontext(string connStr)
+        public KlonokHaborujadbcontext(DbContextOptions<KlonokHaborujadbcontext> options) : base(options)
         {
-            this.connStr = connStr;
+            
             Database.EnsureDeleted();
             Database.EnsureCreated();
             
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            
-
-            optionsBuilder.UseSqlServer(connStr);
-            base.OnConfiguring(optionsBuilder);
-        }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -57,8 +53,13 @@ namespace HXD4UK_HSZF_20242501.Persistence.MsSql
                 .HasForeignKey(bc => bc.BattleId);
 
         }
+        public void OnCloneAdded(Clones clone)
+        {
+            cloneAdded?.Invoke(this, clone);
+        }
 
-        
+
 
     }
+    
 }

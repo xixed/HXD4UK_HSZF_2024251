@@ -11,12 +11,15 @@ namespace HXD4UK_HSZF_20242501.Application
     public class CloneMethods
     {
         KlonokHaborujadbcontext klonokHaborujadbcontext;
-
-        public CloneMethods(KlonokHaborujadbcontext klonokHaborujadbcontext)
+        CloneEventHandler cloneEventHandler;
+        
+        public CloneMethods(KlonokHaborujadbcontext klonokHaborujadbcontext, CloneEventHandler cloneEventHandler)
         {
             this.klonokHaborujadbcontext = klonokHaborujadbcontext;
+            this.cloneEventHandler = cloneEventHandler;
+            klonokHaborujadbcontext.cloneAdded += cloneEventHandler.CreateFile;
         }
-
+        
         public void Data()
         {
             var clones = klonokHaborujadbcontext.Clones.ToList();
@@ -62,7 +65,8 @@ namespace HXD4UK_HSZF_20242501.Application
             klonokHaborujadbcontext.Clones.Add(clones);
 
             klonokHaborujadbcontext.SaveChanges();
-
+           
+            klonokHaborujadbcontext.OnCloneAdded(clones);
             Console.WriteLine("New Clone inserted");
             Console.WriteLine();
         }
