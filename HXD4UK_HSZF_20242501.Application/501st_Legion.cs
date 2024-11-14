@@ -19,7 +19,7 @@ namespace HXD4UK_HSZF_20242501.Application
 
 
 
-        //Nem jo meg
+        
 
         public void _501_Legion()
         {

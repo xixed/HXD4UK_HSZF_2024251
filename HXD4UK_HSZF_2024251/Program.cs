@@ -66,6 +66,7 @@ namespace HXD4UK_HSZF_2024251
                 .AddSingleton<Geonosis>()
                 .AddSingleton<CloneParty>()
                 .AddSingleton<Menu>()
+                .AddSingleton<WrongInput>()
                 .BuildServiceProvider();
 
 

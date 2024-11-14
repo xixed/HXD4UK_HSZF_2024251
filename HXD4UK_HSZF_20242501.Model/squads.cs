@@ -30,14 +30,16 @@ namespace HXD4UK_HSZF_20242501.Model
         {
             Name = name;
             Commander = commander;
-            Id = Id_Counter;
             Id_Counter++;
+            Id = Id_Counter;
+            
            
         }
         public Squads()
         {
-            Id = Id_Counter;
             Id_Counter++;
+            Id = Id_Counter;
+            
         }
     }
 }

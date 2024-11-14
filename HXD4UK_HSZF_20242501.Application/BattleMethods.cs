@@ -1,6 +1,7 @@
 ﻿using Azure.Messaging;
 using HXD4UK_HSZF_20242501.Model;
 using HXD4UK_HSZF_20242501.Persistence.MsSql;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,13 @@ namespace HXD4UK_HSZF_20242501.Application
     public class BattleMethods
     {
         KlonokHaborujadbcontext klonokHaborujadbcontext;
+        WrongInput WrongInput;
+        
 
-        public BattleMethods(KlonokHaborujadbcontext klonokHaborujadbcontext)
+        public BattleMethods(KlonokHaborujadbcontext klonokHaborujadbcontext,WrongInput wrongInput)
         {
             this.klonokHaborujadbcontext=klonokHaborujadbcontext;
+            this.WrongInput = wrongInput;
         }
 
         public void Data()
@@ -35,30 +39,44 @@ namespace HXD4UK_HSZF_20242501.Application
             Console.WriteLine();
         }
 
-
+        
         public void Add()
         {
+            bool isparsed;
             Console.WriteLine("Name your battle:");
-            string name = Console.ReadLine();
+            string? name = WrongInput.STR();
+
+
             Console.WriteLine("Name the location where it was:");
-            string location = Console.ReadLine();
+            string? location = WrongInput.STR();
+
+
             Console.WriteLine("Name the time when it was:");
-            string date = Console.ReadLine();
+            string? date = WrongInput.STR();
+
+
             Console.WriteLine($"How many different clones fought in this battle(max:{klonokHaborujadbcontext.Clones.Count()}):");
             int size;
+            
             while (true)
             {
                 Console.WriteLine();
-                size = int.Parse(Console.ReadLine());
-
-                if (0 < size && size <= klonokHaborujadbcontext.Clones.Count())
-                    break;
-                else
+                string size1= Console.ReadLine();
+                isparsed = int.TryParse(size1, out size);
+                if (!isparsed)
+                {
                     Console.WriteLine("Wrong data try again");
-
+                }
+                else
+                {
+                    if (0 < size && size <= klonokHaborujadbcontext.Clones.Count())
+                        break;
+                    else
+                        Console.WriteLine("Wrong data try again");
+                }
             }
 
-            Console.WriteLine($"Choose that much({size})");
+            Console.WriteLine($"Choose that much ({size})");
 
             int options = 0;
             foreach (var item in klonokHaborujadbcontext.Clones)
@@ -73,13 +91,20 @@ namespace HXD4UK_HSZF_20242501.Application
                 while (true)
                 {
                     Console.WriteLine($"{j}. clone");
-                    clones[j - 1] = int.Parse(Console.ReadLine());
-
-                    if (clones[j - 1] <= options)
-                        break;
+                    string clone = Console.ReadLine();
+                    isparsed = int.TryParse(clone, out clones[j - 1]);
+                    
+                    if (!isparsed)
+                    {
+                        Console.WriteLine("Wrong data try again");
+                    }
                     else
-                        Console.WriteLine("There are no clone with this number try again");
-
+                    {
+                        if (clones[j - 1] <= options)
+                            break;
+                        else
+                            Console.WriteLine("There are no clone with this number try again");
+                    }
                 }
 
             }
@@ -89,7 +114,7 @@ namespace HXD4UK_HSZF_20242501.Application
 
 
             Battles battle = new Battles(name, location, date, clones);
-
+            
             klonokHaborujadbcontext.Battles.Add(battle);
 
             klonokHaborujadbcontext.SaveChanges();
@@ -108,21 +133,38 @@ namespace HXD4UK_HSZF_20242501.Application
                 Console.Write($"{item.Name} [{item.Id}], ");
             }
             Console.WriteLine();
-            int index = int.Parse(Console.ReadLine());
-
-            var delete = klonokHaborujadbcontext.Battles.FirstOrDefault(s => s.Id == index);
-            if (delete == null)
+            int index;
+            bool isparsed;
+            while (true)
             {
-                Console.WriteLine("Wrong Id try again");
-                Remove();
-            }
-            else
-            {
-                klonokHaborujadbcontext.Battles.Remove(delete);
-                klonokHaborujadbcontext.SaveChanges();
+                string str = Console.ReadLine();
+                isparsed = int.TryParse(str, out index);
+                if (!isparsed)
+                {
+                    Console.WriteLine("Wrong data try again");
+                }
+                else
+                {
+                    var delete = klonokHaborujadbcontext.Battles.FirstOrDefault(s => s.Id == index);
+                    if (delete == null)
+                    {
+                        Console.WriteLine("Wrong Id try again");
+                    }
+                    else
+                    {
+                        klonokHaborujadbcontext.Battles.Remove(delete);
+                        klonokHaborujadbcontext.SaveChanges();
+                        break;
+                    }
+                    
+                    
+                }
             }
             Console.WriteLine();
             Console.WriteLine("Battle deteled");
+
+
+
         }
 
         public void Update()
@@ -137,16 +179,18 @@ namespace HXD4UK_HSZF_20242501.Application
             }
             Console.WriteLine();
             int index;
+            bool isparsed;
             while (true)
             {
-
-                index = int.Parse(Console.ReadLine());
-
-                if (index <= options)
-                    break;
-                else
-                    Console.WriteLine("There are no battle with this number try again");
+                string str = Console.ReadLine();
+                isparsed = int.TryParse(str, out index);
+                if (!isparsed)
+                {
+                    Console.WriteLine("Wrong data try again");
+                }
+                else { break; }
             }
+            
             Console.WriteLine();
             Console.WriteLine("Which item do you want to change?");
             var squad = klonokHaborujadbcontext.Battles.FirstOrDefault(s => s.Id == index);
@@ -168,7 +212,7 @@ namespace HXD4UK_HSZF_20242501.Application
                 if (key == ConsoleKey.D1)
                 {
                     Console.WriteLine("Changin name...");
-                    string name = Console.ReadLine();
+                    string name = WrongInput.STR();
                     squad.Name = name;
                     klonokHaborujadbcontext.SaveChanges();
                     Console.WriteLine("Changes saved");
@@ -177,7 +221,7 @@ namespace HXD4UK_HSZF_20242501.Application
                 else if (key == ConsoleKey.D2)
                 {
                     Console.WriteLine("Changin location...");
-                    string location = Console.ReadLine();
+                    string location = WrongInput.STR();
                     squad.Location = location;
                     klonokHaborujadbcontext.SaveChanges();
                     Console.WriteLine("Changes saved");
@@ -186,7 +230,7 @@ namespace HXD4UK_HSZF_20242501.Application
                 else if (key == ConsoleKey.D3)
                 {
                     Console.WriteLine("Changin date...");
-                    string date = Console.ReadLine();
+                    string date = WrongInput.STR();
                     squad.Date = date;
                     klonokHaborujadbcontext.SaveChanges();
                     Console.WriteLine("Changes saved");
@@ -199,13 +243,19 @@ namespace HXD4UK_HSZF_20242501.Application
                     int size;
                     while (true)
                     {
-                        Console.WriteLine();
-                        size = int.Parse(Console.ReadLine());
-
-                        if (0 < size && size <= klonokHaborujadbcontext.Clones.Count())
-                            break;
-                        else
+                        string str = Console.ReadLine();
+                        isparsed = int.TryParse(str, out size);
+                        if (!isparsed)
+                        {
                             Console.WriteLine("Wrong data try again");
+                        }
+                        else
+                        {
+                            if (0 < size && size <= klonokHaborujadbcontext.Clones.Count())
+                                break;
+                            else
+                                Console.WriteLine("Wrong data try again");
+                        }
 
                     }
 
@@ -224,13 +274,20 @@ namespace HXD4UK_HSZF_20242501.Application
                         while (true)
                         {
                             Console.WriteLine($"{j}. clone");
-                            clones[j - 1] = int.Parse(Console.ReadLine());
-
-                            if (clones[j - 1] <= options)
-                                break;
+                            string str = Console.ReadLine();
+                            isparsed = int.TryParse(str, out clones[j-1]);
+                            if (!isparsed)
+                            {
+                                Console.WriteLine("Wrong data try again");
+                            }
                             else
-                                Console.WriteLine("There are no clone with this number try again");
+                            {
 
+                                if (clones[j - 1] <= options)
+                                    break;
+                                else
+                                    Console.WriteLine("There are no clone with this number try again");
+                            }
                         }
                     }
 

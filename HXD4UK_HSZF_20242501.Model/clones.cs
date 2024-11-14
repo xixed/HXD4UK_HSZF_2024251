@@ -39,11 +39,11 @@ namespace HXD4UK_HSZF_20242501.Model
             Rank = rank;
             Squad_id = squad_Id;
             Id_counter++;
-            Id=Id_counter;
+            Id = Id_counter;
         }
 
         public Clones()
-        { 
+        {
             Id_counter++;
             Id = Id_counter;
         }

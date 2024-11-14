@@ -11,12 +11,13 @@ namespace HXD4UK_HSZF_20242501.Application
     public class SquadMethods
     {
         KlonokHaborujadbcontext klonokHaborujadbcontext;
-        
+        WrongInput WrongInput;
 
-        public SquadMethods(KlonokHaborujadbcontext klonokHaborujadbcontext)
+
+        public SquadMethods(KlonokHaborujadbcontext klonokHaborujadbcontext, WrongInput wrongInput)
         {
             this.klonokHaborujadbcontext = klonokHaborujadbcontext;
-            
+            WrongInput = wrongInput;
         }
 
         public void Data()
@@ -35,9 +36,9 @@ namespace HXD4UK_HSZF_20242501.Application
         public void Add()
         {
             Console.WriteLine("Name your squad:");
-            string name = Console.ReadLine();
+            string name = WrongInput.STR();
             Console.WriteLine("Give a commander to your squad:");
-            string commander = Console.ReadLine();
+            string commander = WrongInput.STR();
 
             Squads squads = new Squads(name, commander);
 
@@ -58,22 +59,38 @@ namespace HXD4UK_HSZF_20242501.Application
                 Console.Write($"{item.Name} [{item.Id}], ");
             }
             Console.WriteLine();
-            int index = int.Parse(Console.ReadLine());
-
-            var delete = klonokHaborujadbcontext.Squads.FirstOrDefault(s => s.Id == index);
-
-            if (delete==null)
+            int index;
+            bool isparsed;
+            while (true)
             {
-                Console.WriteLine("Wrong Id try again");
-                Remove();
+                string str = Console.ReadLine();
+                isparsed = int.TryParse(str, out index);
+
+                if (!isparsed)
+                {
+                    Console.WriteLine("Wrong data try again");
+                }
+                else
+                {
+
+                    var delete = klonokHaborujadbcontext.Squads.FirstOrDefault(s => s.Id == index);
+
+                    if (delete == null)
+                    {
+                        Console.WriteLine("Wrong Id try again");
+                        
+                    }
+                    else
+                    {
+                        klonokHaborujadbcontext.Squads.Remove(delete);
+                        klonokHaborujadbcontext.SaveChanges();
+                        break;
+                    }
+                }
             }
-            else
-            {
-                klonokHaborujadbcontext.Squads.Remove(delete);
-                klonokHaborujadbcontext.SaveChanges();
-                Console.WriteLine();
-                Console.WriteLine("Squad deteled");
-            }
+            Console.WriteLine();
+            Console.WriteLine("Squad deteled");
+            
         }
 
         public void Update()
@@ -81,6 +98,7 @@ namespace HXD4UK_HSZF_20242501.Application
             Console.WriteLine("Choose a Squad you want to update");
             Console.WriteLine();
             int options = 0;
+            bool isparsed;
             foreach (var item in klonokHaborujadbcontext.Squads)
             {
                 options++;
@@ -91,12 +109,23 @@ namespace HXD4UK_HSZF_20242501.Application
             while (true)
             {
 
-                index = int.Parse(Console.ReadLine());
+                string str = Console.ReadLine();
+                isparsed = int.TryParse(str, out index);
 
-                if (index <= options)
-                    break;
+                if (!isparsed)
+                {
+                    Console.WriteLine("Wrong data try again");
+                }
                 else
-                    Console.WriteLine("There are no squad with this number try again");
+                {
+
+                    if (index <= options)
+                        break;
+                    else
+                    {
+                        Console.WriteLine("There are no squad with this number try again");
+                    }
+                }
             }
             Console.WriteLine();
             Console.WriteLine("Which item do you want to change?");
@@ -110,7 +139,7 @@ namespace HXD4UK_HSZF_20242501.Application
                 if (key == ConsoleKey.D1)
                 {
                     Console.WriteLine("Changin name...");
-                    string name = Console.ReadLine();
+                    string name = WrongInput.STR();
                     squad.Name = name;
                     klonokHaborujadbcontext.SaveChanges();
                     Console.WriteLine("Changes saved");
@@ -119,7 +148,7 @@ namespace HXD4UK_HSZF_20242501.Application
                 else if (key == ConsoleKey.D2)
                 {
                     Console.WriteLine("Changin commander...");
-                    string commander = Console.ReadLine();
+                    string commander = WrongInput.STR();
                     squad.Commander = commander;
                     klonokHaborujadbcontext.SaveChanges();
                     Console.WriteLine("Changes saved");
