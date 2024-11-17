@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace HXD4UK_HSZF_20242501.Model
 {
@@ -14,13 +15,15 @@ namespace HXD4UK_HSZF_20242501.Model
 
         public string Rank { get; set; }
 
+        
         public int Squad_id { get; set;}
 
-        public Squads Squad { get; set; }
+        public virtual Squads Squad { get; set; }
 
         public static int Id_counter { get; set; }
+
         
-        public ICollection<Battlestoclones> Battles { get; set; }
+        public virtual ICollection<Battlestoclones> Battlestoclones { get; set; }
 
         public Clones(int id, string name, string designation, string rank, int squad_Id)
         {

@@ -10,13 +10,16 @@ using System.Threading.Tasks;
 
 namespace HXD4UK_HSZF_20242501.Application
 {
+   
+
+
     public class BattleMethods
     {
-        KlonokHaborujadbcontext klonokHaborujadbcontext;
-        WrongInput WrongInput;
+        IKlonokHaborujadbcontext klonokHaborujadbcontext;
+        IWrongInput WrongInput;
         
 
-        public BattleMethods(KlonokHaborujadbcontext klonokHaborujadbcontext,WrongInput wrongInput)
+        public BattleMethods(IKlonokHaborujadbcontext klonokHaborujadbcontext,IWrongInput wrongInput)
         {
             this.klonokHaborujadbcontext=klonokHaborujadbcontext;
             this.WrongInput = wrongInput;
@@ -25,6 +28,7 @@ namespace HXD4UK_HSZF_20242501.Application
         public void Data()
         {
             var battles = klonokHaborujadbcontext.Battles.ToList();
+
             Console.WriteLine("Names".PadLeft(20) + "Location".PadLeft(30) + "Date".PadLeft(30) + "Clones".PadLeft(30));
             Console.WriteLine();
 
@@ -115,6 +119,15 @@ namespace HXD4UK_HSZF_20242501.Application
 
             Battles battle = new Battles(name, location, date, clones);
             
+            foreach (var cloneId in clones)
+            {
+                klonokHaborujadbcontext.Battlestoclones.Add(new Battlestoclones
+                {
+                    BattleId = battle.Id,
+                    CloneId = cloneId
+                });
+            }
+
             klonokHaborujadbcontext.Battles.Add(battle);
 
             klonokHaborujadbcontext.SaveChanges();
@@ -193,13 +206,13 @@ namespace HXD4UK_HSZF_20242501.Application
             
             Console.WriteLine();
             Console.WriteLine("Which item do you want to change?");
-            var squad = klonokHaborujadbcontext.Battles.FirstOrDefault(s => s.Id == index);
-            Console.WriteLine($"{squad.Name}[1]");
-            Console.WriteLine($"{squad.Location}[2]");
-            Console.WriteLine($"{squad.Date}[3]");
+            var battles = klonokHaborujadbcontext.Battles.FirstOrDefault(s => s.Id == index);
+            Console.WriteLine($"{battles.Name}[1]");
+            Console.WriteLine($"{battles.Location}[2]");
+            Console.WriteLine($"{battles.Date}[3]");
             Console.Write("Clones[4]:") ;
             int options1 = 0;
-            foreach (var item in squad.Clones)
+            foreach (var item in battles.Clones)
             {
                 options1++;
                 Console.Write($"{item}, ");
@@ -213,7 +226,7 @@ namespace HXD4UK_HSZF_20242501.Application
                 {
                     Console.WriteLine("Changin name...");
                     string name = WrongInput.STR();
-                    squad.Name = name;
+                    battles.Name = name;
                     klonokHaborujadbcontext.SaveChanges();
                     Console.WriteLine("Changes saved");
                     break;
@@ -222,7 +235,7 @@ namespace HXD4UK_HSZF_20242501.Application
                 {
                     Console.WriteLine("Changin location...");
                     string location = WrongInput.STR();
-                    squad.Location = location;
+                    battles.Location = location;
                     klonokHaborujadbcontext.SaveChanges();
                     Console.WriteLine("Changes saved");
                     break;
@@ -231,7 +244,7 @@ namespace HXD4UK_HSZF_20242501.Application
                 {
                     Console.WriteLine("Changin date...");
                     string date = WrongInput.STR();
-                    squad.Date = date;
+                    battles.Date = date;
                     klonokHaborujadbcontext.SaveChanges();
                     Console.WriteLine("Changes saved");
                     break;
@@ -290,8 +303,20 @@ namespace HXD4UK_HSZF_20242501.Application
                             }
                         }
                     }
+                    battles.Clones = clones;
 
-                    squad.Clones = clones;
+                    var existingBattleToClones = klonokHaborujadbcontext.Battlestoclones.Where(bc => bc.BattleId == battles.Id).ToList();
+                    klonokHaborujadbcontext.Battlestoclones.RemoveRange(existingBattleToClones);
+
+                    foreach (var cloneId in clones)
+                    {
+                        klonokHaborujadbcontext.Battlestoclones.Add(new Battlestoclones
+                        {
+                            BattleId = battles.Id,
+                            CloneId = cloneId
+                        });
+                    }
+
                     klonokHaborujadbcontext.SaveChanges();
                     Console.WriteLine("Changes saved");
                     break;

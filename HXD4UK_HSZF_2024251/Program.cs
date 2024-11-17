@@ -35,12 +35,28 @@ namespace HXD4UK_HSZF_2024251
             var battles = JsonConvert.DeserializeObject<List<Battles>>(File.ReadAllText("battlesjson.json"));
             var squads = JsonConvert.DeserializeObject<List<Squads>>(File.ReadAllText("squadsjson.json"));
 
-
-
             klonokHaborujadbcontext.Clones.AddRange(clones);
             klonokHaborujadbcontext.Battles.AddRange(battles);
             klonokHaborujadbcontext.Squads.AddRange(squads);
 
+            klonokHaborujadbcontext.SaveChanges();
+
+            foreach (var battle in battles)
+            {
+                foreach (var cloneId in battle.Clones)
+                {
+                    var relationship = new Battlestoclones
+                    {
+                        BattleId = battle.Id,
+                        CloneId = cloneId
+                    };
+
+                    klonokHaborujadbcontext.Battlestoclones.Add(relationship);
+                }
+            }
+
+
+            
             klonokHaborujadbcontext.SaveChanges();
 
             
@@ -54,7 +70,7 @@ namespace HXD4UK_HSZF_2024251
         {
             return
                 services
-                .AddDbContext<KlonokHaborujadbcontext>(options => options.UseSqlServer(connection))
+                .AddDbContext<IKlonokHaborujadbcontext,KlonokHaborujadbcontext>(options => options.UseSqlServer(connection))
                 .AddSingleton<CloneEventHandler>()
                 .AddSingleton<BattleMethods>()
                 .AddSingleton<CloneMethods>()
@@ -66,7 +82,7 @@ namespace HXD4UK_HSZF_2024251
                 .AddSingleton<Geonosis>()
                 .AddSingleton<CloneParty>()
                 .AddSingleton<Menu>()
-                .AddSingleton<WrongInput>()
+                .AddSingleton<IWrongInput,WrongInput>()
                 .BuildServiceProvider();
 
 

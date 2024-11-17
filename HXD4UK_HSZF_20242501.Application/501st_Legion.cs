@@ -10,9 +10,9 @@ namespace HXD4UK_HSZF_20242501.Application
 {
     public class _501st_Legion
     {
-        KlonokHaborujadbcontext klonokHaborujadbcontext;
+        IKlonokHaborujadbcontext klonokHaborujadbcontext;
 
-        public _501st_Legion(KlonokHaborujadbcontext klonokHaborujadbcontext) 
+        public _501st_Legion(IKlonokHaborujadbcontext klonokHaborujadbcontext) 
         {
             this.klonokHaborujadbcontext=klonokHaborujadbcontext;
         }

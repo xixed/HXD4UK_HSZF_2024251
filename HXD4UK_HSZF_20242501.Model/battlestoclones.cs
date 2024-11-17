@@ -11,13 +11,13 @@ namespace HXD4UK_HSZF_20242501.Model
     public class Battlestoclones
     {
         public int CloneId { get; set; }
-        public Clones clones { get; set; }
+        public virtual Clones? Clone { get; set; }
 
         public int BattleId { get; set; }
 
-        public Battles battles { get; set; }
+        public virtual Battles? Battle { get; set; }
 
 
-        
+
     }
 }

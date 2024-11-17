@@ -11,9 +11,9 @@ namespace HXD4UK_HSZF_20242501.Application
     public class Geonosis
     {
 
-        public KlonokHaborujadbcontext klonokHaborujadbcontext;
+        public IKlonokHaborujadbcontext klonokHaborujadbcontext;
 
-        public Geonosis(KlonokHaborujadbcontext klonokHaborujadbcontext) { this.klonokHaborujadbcontext = klonokHaborujadbcontext; }
+        public Geonosis(IKlonokHaborujadbcontext klonokHaborujadbcontext) { this.klonokHaborujadbcontext = klonokHaborujadbcontext; }
 
         public void Geo()
         {

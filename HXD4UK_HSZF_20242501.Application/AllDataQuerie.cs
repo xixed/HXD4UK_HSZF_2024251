@@ -9,14 +9,14 @@ namespace HXD4UK_HSZF_20242501.Application
 {
     public class AllDataQuerie
     {
-        public KlonokHaborujadbcontext klonokHaborujadbcontext;
+        public IKlonokHaborujadbcontext klonokHaborujadbcontext;
         public BattleMethods battleMethods;
         public CloneMethods cloneMethods;
         public SquadMethods squadMethods;
 
 
 
-        public AllDataQuerie(KlonokHaborujadbcontext klonokHaborujadbcontext, SquadMethods squadMethods, CloneMethods cloneMethods, BattleMethods battleMethods)
+        public AllDataQuerie(IKlonokHaborujadbcontext klonokHaborujadbcontext, SquadMethods squadMethods, CloneMethods cloneMethods, BattleMethods battleMethods)
         {
             this.klonokHaborujadbcontext = klonokHaborujadbcontext;
             this.squadMethods = squadMethods;

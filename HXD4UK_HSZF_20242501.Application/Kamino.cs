@@ -9,9 +9,9 @@ namespace HXD4UK_HSZF_20242501.Application
 {
     public class Kamino
     {
-        public KlonokHaborujadbcontext klonokHaborujadbcontext;
+        public IKlonokHaborujadbcontext klonokHaborujadbcontext;
 
-        public Kamino(KlonokHaborujadbcontext klonokHaborujadbcontext)
+        public Kamino(IKlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             this.klonokHaborujadbcontext=klonokHaborujadbcontext;
         }

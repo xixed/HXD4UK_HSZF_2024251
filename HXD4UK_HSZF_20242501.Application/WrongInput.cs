@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace HXD4UK_HSZF_20242501.Application
 {
-    public class WrongInput
+
+    public interface IWrongInput
+    {
+        public string STR();
+    }
+    public class WrongInput : IWrongInput
     {
         public string STR()
         {

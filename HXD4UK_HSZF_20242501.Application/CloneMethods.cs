@@ -11,11 +11,11 @@ namespace HXD4UK_HSZF_20242501.Application
 {
     public class CloneMethods
     {
-        KlonokHaborujadbcontext klonokHaborujadbcontext;
+        IKlonokHaborujadbcontext klonokHaborujadbcontext;
         CloneEventHandler cloneEventHandler;
-        WrongInput WrongInput;
+        IWrongInput WrongInput;
 
-        public CloneMethods(KlonokHaborujadbcontext klonokHaborujadbcontext, CloneEventHandler cloneEventHandler, WrongInput wrongInput)
+        public CloneMethods(IKlonokHaborujadbcontext klonokHaborujadbcontext, CloneEventHandler cloneEventHandler, IWrongInput wrongInput)
         {
             this.klonokHaborujadbcontext = klonokHaborujadbcontext;
             this.cloneEventHandler = cloneEventHandler;

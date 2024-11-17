@@ -10,8 +10,8 @@ namespace HXD4UK_HSZF_20242501.Application
 {
     public class CloneEventHandler
     {
-        KlonokHaborujadbcontext KlonokHaborujadbcontext;
-        public CloneEventHandler(KlonokHaborujadbcontext klonokHaborujadbcontext) 
+        IKlonokHaborujadbcontext KlonokHaborujadbcontext;
+        public CloneEventHandler(IKlonokHaborujadbcontext klonokHaborujadbcontext) 
         {
             KlonokHaborujadbcontext = klonokHaborujadbcontext;
         }

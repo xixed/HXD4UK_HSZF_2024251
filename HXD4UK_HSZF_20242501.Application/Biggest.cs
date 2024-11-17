@@ -10,10 +10,10 @@ namespace HXD4UK_HSZF_20242501.Application
 {
     public class Biggest
     {
-        public KlonokHaborujadbcontext klonokHaborujadbcontext;
+        public IKlonokHaborujadbcontext klonokHaborujadbcontext;
 
 
-        public Biggest(KlonokHaborujadbcontext klonokHaborujadbcontext) 
+        public Biggest(IKlonokHaborujadbcontext klonokHaborujadbcontext) 
         {
             this.klonokHaborujadbcontext=klonokHaborujadbcontext;
         }

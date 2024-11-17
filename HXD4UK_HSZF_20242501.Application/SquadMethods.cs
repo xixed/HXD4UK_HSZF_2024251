@@ -10,11 +10,11 @@ namespace HXD4UK_HSZF_20242501.Application
 {
     public class SquadMethods
     {
-        KlonokHaborujadbcontext klonokHaborujadbcontext;
-        WrongInput WrongInput;
+        IKlonokHaborujadbcontext klonokHaborujadbcontext;
+        IWrongInput WrongInput;
 
 
-        public SquadMethods(KlonokHaborujadbcontext klonokHaborujadbcontext, WrongInput wrongInput)
+        public SquadMethods(IKlonokHaborujadbcontext klonokHaborujadbcontext, IWrongInput wrongInput)
         {
             this.klonokHaborujadbcontext = klonokHaborujadbcontext;
             WrongInput = wrongInput;
