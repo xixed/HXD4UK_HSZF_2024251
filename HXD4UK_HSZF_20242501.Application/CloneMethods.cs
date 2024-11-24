@@ -9,30 +9,34 @@ using System.Threading.Tasks;
 
 namespace HXD4UK_HSZF_20242501.Application
 {
-    public class CloneMethods
+    public interface ICloneMethods
+    {
+        List<Clones> Data();
+        void Add();
+        void Remove();
+        void Update();
+
+    }
+    public class CloneMethods : ICloneMethods
     {
         IKlonokHaborujadbcontext klonokHaborujadbcontext;
-        CloneEventHandler cloneEventHandler;
+        ICloneEventHandler cloneEventHandler;
         IWrongInput WrongInput;
+        IInputReader InputReader;
 
-        public CloneMethods(IKlonokHaborujadbcontext klonokHaborujadbcontext, CloneEventHandler cloneEventHandler, IWrongInput wrongInput)
+        public CloneMethods(IKlonokHaborujadbcontext klonokHaborujadbcontext, ICloneEventHandler cloneEventHandler, IWrongInput wrongInput, IInputReader inputReader)
         {
             this.klonokHaborujadbcontext = klonokHaborujadbcontext;
             this.cloneEventHandler = cloneEventHandler;
             klonokHaborujadbcontext.cloneAdded += cloneEventHandler.CreateFile;
             WrongInput = wrongInput;
+            InputReader = inputReader;
         }
 
-        public void Data()
+        public List<Clones> Data()
         {
             var clones = klonokHaborujadbcontext.Clones.ToList();
-            Console.WriteLine("Names".PadLeft(20) + "Designation".PadLeft(30) + "Rank".PadLeft(30) + "Squad_Id".PadLeft(20));
-            Console.WriteLine();
-            foreach (var item in clones)
-            {
-                Console.WriteLine($"{item.Name.PadLeft(20)}{item.Designation.PadLeft(30)}{item.Rank.PadLeft(30)}{item.Squad_id.ToString().PadLeft(20)}");
-            }
-            Console.WriteLine();
+            return clones;
         }
 
 
@@ -57,7 +61,7 @@ namespace HXD4UK_HSZF_20242501.Application
             while (true)
             {
 
-                string str = Console.ReadLine();
+                string str = WrongInput.STR();
                 isparsed = int.TryParse(str, out squad_id);
                 if (!isparsed)
                 {
@@ -98,7 +102,7 @@ namespace HXD4UK_HSZF_20242501.Application
             bool isparsed;
             while (true)
             {
-                string str = Console.ReadLine();
+                string str = WrongInput.STR();
                 isparsed = int.TryParse(str, out index);
                 if (!isparsed)
                 {
@@ -141,7 +145,7 @@ namespace HXD4UK_HSZF_20242501.Application
             while (true)
             {
 
-                string str = Console.ReadLine();
+                string str = WrongInput.STR();
                 isparsed = int.TryParse(str, out index);
                 if (!isparsed)
                 {
@@ -167,7 +171,7 @@ namespace HXD4UK_HSZF_20242501.Application
             Console.WriteLine($"{clone.Squad_id}[4]");
             while (true)
             {
-                var key = Console.ReadKey(true).Key;
+                var key = InputReader.ReadKey(true);
 
                 if (key == ConsoleKey.D1)
                 {

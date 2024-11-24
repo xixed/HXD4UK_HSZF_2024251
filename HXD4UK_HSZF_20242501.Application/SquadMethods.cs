@@ -8,28 +8,33 @@ using System.Threading.Tasks;
 
 namespace HXD4UK_HSZF_20242501.Application
 {
-    public class SquadMethods
+    public interface ISquadMethods
+    {
+        List<Squads> Data();
+        void Add();
+        void Remove();
+        void Update();
+
+    }
+    public class SquadMethods : ISquadMethods
     {
         IKlonokHaborujadbcontext klonokHaborujadbcontext;
         IWrongInput WrongInput;
+        IInputReader InputReader;
 
 
-        public SquadMethods(IKlonokHaborujadbcontext klonokHaborujadbcontext, IWrongInput wrongInput)
+        public SquadMethods(IKlonokHaborujadbcontext klonokHaborujadbcontext, IWrongInput wrongInput, IInputReader inputReader)
         {
             this.klonokHaborujadbcontext = klonokHaborujadbcontext;
             WrongInput = wrongInput;
+            InputReader = inputReader;
         }
 
-        public void Data()
+        public List<Squads> Data()
         {
             var squads = klonokHaborujadbcontext.Squads.ToList();
-            Console.WriteLine("Names".PadLeft(30) + "Commanders".PadLeft(70));
-            Console.WriteLine();
-            foreach (var item in squads)
-            {
-                Console.WriteLine($"{item.Name.PadLeft(30)}{item.Commander.PadLeft(70)}");
-            }
-            Console.WriteLine();
+            
+            return squads;
         }
 
 
@@ -63,7 +68,7 @@ namespace HXD4UK_HSZF_20242501.Application
             bool isparsed;
             while (true)
             {
-                string str = Console.ReadLine();
+                string str = WrongInput.STR();
                 isparsed = int.TryParse(str, out index);
 
                 if (!isparsed)
@@ -109,7 +114,7 @@ namespace HXD4UK_HSZF_20242501.Application
             while (true)
             {
 
-                string str = Console.ReadLine();
+                string str = WrongInput.STR();
                 isparsed = int.TryParse(str, out index);
 
                 if (!isparsed)
@@ -134,7 +139,7 @@ namespace HXD4UK_HSZF_20242501.Application
             Console.WriteLine($"{squad.Commander}[2]");
             while (true)
             {
-                var key = Console.ReadKey(true).Key;
+                var key = InputReader.ReadKey(true);
 
                 if (key == ConsoleKey.D1)
                 {

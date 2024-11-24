@@ -1,6 +1,5 @@
 ﻿using HXD4UK_HSZF_20242501.Application;
 using HXD4UK_HSZF_20242501.Model;
-using HXD4UK_HSZF_20242501.Persistence.MsSql;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -11,12 +10,13 @@ using System.Threading.Tasks;
 namespace HXD4UK_HSZF_20242501.Test
 {
     [TestFixture]
-    public class BattleMethodsTests
+    public class CloneMethodsTests
     {
         private Fake_Klonokhaborujadbcontext _fakeContext;
         private Fake_WrongInput _fakeWrongInput;
-        private BattleMethods battleMethods;
+        private CloneMethods   cloneMethods;
         private FakeInputReader _fakeInputReader;
+        private Fake_CloneEventHandler _fakeCloneEventHandler;
 
         [SetUp]
         public void Setup()
@@ -24,13 +24,15 @@ namespace HXD4UK_HSZF_20242501.Test
             _fakeContext = new Fake_Klonokhaborujadbcontext();
             _fakeWrongInput = new Fake_WrongInput();
             _fakeInputReader = new FakeInputReader(new Queue<ConsoleKey>(new[] { ConsoleKey.D1 }));
+            _fakeCloneEventHandler = new Fake_CloneEventHandler();
 
-            battleMethods = new BattleMethods(_fakeContext, _fakeWrongInput,_fakeInputReader);
+            cloneMethods = new CloneMethods(_fakeContext, _fakeCloneEventHandler, _fakeWrongInput, _fakeInputReader);
 
-            
+
+
             _fakeContext.Squads.Add(new Squads { Id = 1, Name = "Squad A", Commander = "Anakin" });
             _fakeContext.Squads.Add(new Squads { Id = 2, Name = "Squad B", Commander = "Bela" });
-            _fakeContext.Clones.Add(new Clones { Id = 1, Name = "Clone A", Designation = "ASD", Rank = "s", Squad_id = 1 });
+            _fakeContext.Clones.Add(new Clones { Id = 1, Name = "Clone A", Designation = "ASD", Rank = "s", Squad_id =1 });
             _fakeContext.Clones.Add(new Clones { Id = 2, Name = "Clone B", Designation = "SD", Rank = "asds", Squad_id = 2 });
             _fakeContext.Clones.Add(new Clones { Id = 3, Name = "Clone C", Designation = "D", Rank = "as", Squad_id = 2 });
             _fakeContext.Battles.Add(new Battles { Id = 1, Name = "Battle X", Location = "Planet Y", Date = "2024-01-01", Clones = [1, 2] });
@@ -43,11 +45,11 @@ namespace HXD4UK_HSZF_20242501.Test
         [Test]
         public void Data_ShouldReturnAllBattles()
         {
-            var result = battleMethods.Data();
+            var result = cloneMethods.Data();
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(1.Equals(result.Count));
-            Assert.That("Battle X".Equals(result[0].Name));
+            Assert.That(3.Equals(result.Count));
+            Assert.That("Clone A".Equals(result[0].Name));
         }
 
         [Test]
@@ -56,30 +58,25 @@ namespace HXD4UK_HSZF_20242501.Test
             
             _fakeWrongInput.NextInputs = new Queue<string>(new[]
             {
-            "Battle Z",
-            "Planet W",
-            "2024-11-20", 
-            "3",
+            "Clone D", 
+            "Deed", 
+            "Commander", 
             "1",
-            "2",
-            "3" 
             });
 
             Console.SetIn(new StringReader(string.Join(Environment.NewLine, _fakeWrongInput.NextInputs)));
+
             
-           
-            battleMethods.Add();
+            cloneMethods.Add();
 
-           
-            var battles = _fakeContext.Battles.ToList();
-            Assert.That(2.Equals(battles.Count));
-            Assert.That("Battle Z".Equals(battles[1].Name));
-
-            var battleToClones = _fakeContext.Battlestoclones.ToList();
-            Assert.That(3.Equals(battleToClones.Count));
-            Assert.That(1.Equals(battleToClones[2].CloneId));
-            Assert.That(2.Equals(battleToClones[1].CloneId));
-            Assert.That(3.Equals(battleToClones[0].CloneId));
+            
+            var clones = _fakeContext.Clones.ToList();
+            Assert.That(4.Equals(clones.Count));
+            Assert.That("Clone D".Equals(clones[3].Name));
+            Assert.That("Deed".Equals(clones[3].Designation));
+            Assert.That("Commander".Equals(clones[3].Rank));
+            Assert.That(1.Equals(clones[3].Squad_id));
+            
         }
 
         [Test]
@@ -90,11 +87,11 @@ namespace HXD4UK_HSZF_20242501.Test
             Console.SetIn(new StringReader(string.Join(Environment.NewLine, _fakeWrongInput.NextInputs)));
 
             
-            battleMethods.Remove();
+            cloneMethods.Remove();
 
             
-            var battles = _fakeContext.Battles.ToList();
-            Assert.That(0.Equals(battles.Count));
+            var clones = _fakeContext.Clones.ToList();
+            Assert.That(2.Equals(clones.Count));
         }
 
         [Test]
@@ -103,23 +100,21 @@ namespace HXD4UK_HSZF_20242501.Test
             
             _fakeWrongInput.NextInputs = new Queue<string>(new[]
             {
-              "1", "Updated Battle Name"
+              "1", "Updated Clone Name"
             });
             Console.SetIn(new StringReader(string.Join(Environment.NewLine, _fakeWrongInput.NextInputs)));
-            
-            
-            
+
+
+
 
             
-            battleMethods.Update();
+            cloneMethods.Update();
 
             
-            var battle = _fakeContext.Battles.FirstOrDefault(b => b.Id == 1);
+            var clone = _fakeContext.Clones.FirstOrDefault(b => b.Id == 1);
             
-            Assert.That(battle, Is.Not.Null);
-            Assert.That("Updated Battle Name".Equals(battle.Name));
+            Assert.That(clone, Is.Not.Null);
+            Assert.That("Updated Clone Name".Equals(clone.Name));
         }
-
-
     }
 }

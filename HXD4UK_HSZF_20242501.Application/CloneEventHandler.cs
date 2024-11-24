@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 
 namespace HXD4UK_HSZF_20242501.Application
 {
-    public class CloneEventHandler
+    public interface ICloneEventHandler
+    { 
+        public void CreateFile(object sender, Clones clones);
+    }
+    public class CloneEventHandler : ICloneEventHandler
     {
         IKlonokHaborujadbcontext KlonokHaborujadbcontext;
         public CloneEventHandler(IKlonokHaborujadbcontext klonokHaborujadbcontext) 

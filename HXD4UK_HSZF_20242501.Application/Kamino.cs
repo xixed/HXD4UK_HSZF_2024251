@@ -1,4 +1,5 @@
-﻿using HXD4UK_HSZF_20242501.Persistence.MsSql;
+﻿using HXD4UK_HSZF_20242501.Model;
+using HXD4UK_HSZF_20242501.Persistence.MsSql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,11 @@ using System.Threading.Tasks;
 
 namespace HXD4UK_HSZF_20242501.Application
 {
-    public class Kamino
+    public interface IKamino
+    {
+        List<Clones> KaminoBattle();
+    }
+    public class Kamino : IKamino
     {
         public IKlonokHaborujadbcontext klonokHaborujadbcontext;
 
@@ -17,22 +22,21 @@ namespace HXD4UK_HSZF_20242501.Application
         }
 
 
-        public void KaminoBattle()
+        public List<Clones> KaminoBattle()
         {
-            var battle = klonokHaborujadbcontext.Battles.Where(clone => clone.Location == "Battle of Kamino");
+            Battles battle = klonokHaborujadbcontext.Battles.FirstOrDefault(clone => clone.Name == "Battle of Kamino");
             if (battle == null)
             {
-                Console.WriteLine("There are no 'Battle of Kamino' in the database");
+                
+                return null;
             }
             else
             {
-                var clones = klonokHaborujadbcontext.Clones;
+                var clones = klonokHaborujadbcontext.Battlestoclones.Where(x=>x.BattleId==battle.Id).Select(x=>x.Clone).ToList();
 
-                foreach (var clone in clones)
-                {
-                    Console.WriteLine($"Name: {clone.Name}, Rank: {clone.Rank}");
-                }
+                return clones;
             }
+            
             
         }
     }

@@ -17,18 +17,18 @@ namespace HXD4UK_HSZF_2024251
     public class Menu
     {
 
-        public AllDataQuerie AllDataQuerie;
-        public SquadMethods SquadMethods;
-        public CloneMethods CloneMethods;
-        public BattleMethods BattleMethods;
-        public Biggest Biggest;
-        public _501st_Legion _501St_Legion;
-        public Kamino Kamino;
-        public Geonosis geonosis;
-        public CloneParty CloneParty;
+        public IAllDataQuerie AllDataQuerie;
+        public ISquadMethods SquadMethods;
+        public ICloneMethods CloneMethods;
+        public IBattleMethods BattleMethods;
+        public IBiggest Biggest;
+        public I_501st_Legion _501St_Legion;
+        public IKamino Kamino;
+        public IGeonosis geonosis;
+        public ICloneParty CloneParty;
 
 
-        public Menu(AllDataQuerie allDataQuerie, SquadMethods squadMethods, CloneMethods cloneMethods, BattleMethods battleMethods, Biggest biggest, _501st_Legion _501St_Legion, Kamino kamino, Geonosis geonosis, CloneParty cloneParty)
+        public Menu(IAllDataQuerie allDataQuerie, ISquadMethods squadMethods, ICloneMethods cloneMethods, IBattleMethods battleMethods, IBiggest biggest, I_501st_Legion _501St_Legion, IKamino kamino, IGeonosis geonosis, ICloneParty cloneParty)
         {
             AllDataQuerie = allDataQuerie;
             SquadMethods = squadMethods;
@@ -124,7 +124,14 @@ namespace HXD4UK_HSZF_2024251
         public void SquadsMenu(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
-            SquadMethods.Data();
+            List<Squads> squads = SquadMethods.Data();
+            Console.WriteLine("Names".PadLeft(30) + "Commanders".PadLeft(70));
+            Console.WriteLine();
+            foreach (var item in squads)
+            {
+                Console.WriteLine($"{item.Name.PadLeft(30)}{item.Commander.PadLeft(70)}");
+            }
+            Console.WriteLine();
             Console.WriteLine("Back[Backspace]");
             Console.WriteLine("Main Menu[Esc]");
 
@@ -149,8 +156,16 @@ namespace HXD4UK_HSZF_2024251
         public void CLonesMenu(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
-            CloneMethods.Data();
+            List<Clones> clones = CloneMethods.Data();
+            Console.WriteLine("Names".PadLeft(20) + "Designation".PadLeft(30) + "Rank".PadLeft(30) + "Squad_Id".PadLeft(20));
             Console.WriteLine();
+            foreach (var item in clones)
+            {
+                Console.WriteLine($"{item.Name.PadLeft(20)}{item.Designation.PadLeft(30)}{item.Rank.PadLeft(30)}{item.Squad_id.ToString().PadLeft(20)}");
+            }
+            Console.WriteLine();
+
+
             Console.WriteLine("Back[Backspace]");
             Console.WriteLine("Main Menu[Esc]");
 
@@ -174,7 +189,20 @@ namespace HXD4UK_HSZF_2024251
         public void BattlesMenu(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
-            BattleMethods.Data();
+            Console.WriteLine("Battles:");
+            List<Battles> battles = BattleMethods.Data();
+            Console.WriteLine("Names".PadLeft(20) + "Location".PadLeft(30) + "Date".PadLeft(30) + "Clones".PadLeft(30));
+            Console.WriteLine();
+
+            foreach (var item in battles)
+            {
+
+                Console.WriteLine($"{item.Name.PadLeft(20)}{item.Location.PadLeft(30)}{item.Date.PadLeft(30)}{string.Join(",", item.Clones).PadLeft(30)}");
+
+
+
+            }
+            Console.WriteLine();
             Console.WriteLine("Back[Backspace]");
             Console.WriteLine("Main Menu[Esc]");
 
@@ -194,8 +222,6 @@ namespace HXD4UK_HSZF_2024251
             
             
         }
-        
-
         
 
         //Modify
@@ -235,7 +261,6 @@ namespace HXD4UK_HSZF_2024251
         }
 
         //Add
-
         public void AddMenu(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
@@ -276,9 +301,6 @@ namespace HXD4UK_HSZF_2024251
         }
 
         //Squad_Add
-
-
-       
         public void SquadAdd(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
@@ -304,8 +326,6 @@ namespace HXD4UK_HSZF_2024251
         }
 
         //Clone_Add
-
-        //int hosszusag
         public void CloneAdd(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
@@ -333,8 +353,6 @@ namespace HXD4UK_HSZF_2024251
         }
 
         //Battle_Add
-
-        //  tobbszor meg lehet adni ugyanazt a klon nemtudom baj e!!!
         public void BattleAdd(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
@@ -396,10 +414,7 @@ namespace HXD4UK_HSZF_2024251
             }
         }
 
-
-
         //Squad Delete
-        
         public void SquadDel(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
@@ -423,7 +438,6 @@ namespace HXD4UK_HSZF_2024251
         }
 
         //Clone Delete
-        
         public void CloneDel(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
@@ -445,7 +459,6 @@ namespace HXD4UK_HSZF_2024251
         }
 
         //Battle Delete
-        
         public void BattleDel(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
@@ -466,9 +479,7 @@ namespace HXD4UK_HSZF_2024251
             }
         }
 
-
         //Update
-
         public void UpdateMenu(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
@@ -508,7 +519,6 @@ namespace HXD4UK_HSZF_2024251
 
         //Squad Update
 
-        
         public void SquadUpdate(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
@@ -575,7 +585,6 @@ namespace HXD4UK_HSZF_2024251
         }
 
         //Queries
-        
         public void QueriesMenu(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
@@ -667,7 +676,15 @@ namespace HXD4UK_HSZF_2024251
         {
             Console.Clear();
             Console.WriteLine("The biggest battle was:");
-            Biggest.Big();
+
+            var battle = Biggest.Big();
+            if (battle != null)
+            {
+                Console.WriteLine($"{battle.Name}");
+            }
+            else { Console.WriteLine("There are no battle in the database"); }
+
+            
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Back[Backspace]");
@@ -694,7 +711,13 @@ namespace HXD4UK_HSZF_2024251
         {
             Console.Clear();
             Console.WriteLine("'501 Legion' clones:");
-            _501St_Legion._501_Legion();
+            Console.WriteLine();
+            List<Clones> clones = _501St_Legion._501_Legion();
+            if (clones.Count == 0)
+            {
+                Console.WriteLine("There are no '501st Legion' squad in the database");
+            }
+            else { foreach (var clone in clones) { Console.WriteLine(clone.Name); } }
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Back[Backspace]");
@@ -722,8 +745,18 @@ namespace HXD4UK_HSZF_2024251
             Console.Clear();
             Console.WriteLine("Battle(s) where at least 3 clones participated form '501st Legion':");
 
-            _501St_Legion._3_Atleast();
-
+            List<Battles> battles= _501St_Legion._3_Atleast();
+            if (battles.Count == 0)
+            {
+                Console.WriteLine("There are no battle where at least 3 clones participated from '501st Legion'");
+            }
+            else 
+            {
+                foreach (var item in battles)
+                {
+                    Console.WriteLine(item.Name);
+                }
+            }
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Back[Backspace]");
@@ -749,7 +782,24 @@ namespace HXD4UK_HSZF_2024251
         public void Kaminoi(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
-            Kamino.KaminoBattle();
+
+            var clones = Kamino.KaminoBattle();
+
+            if (clones == null)
+            {
+                Console.WriteLine("There are no 'Battle of Kamino' in the database");
+            }
+            else 
+            {
+                foreach (var clone in clones)
+                {
+                    Console.WriteLine($"Name: {clone.Name}, Rank: {clone.Rank}");
+                }
+            }
+
+            
+            
+            
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Back[Backspace]");
@@ -775,12 +825,21 @@ namespace HXD4UK_HSZF_2024251
         public void Geonosis(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
-            geonosis.Geo();
+            var clones= geonosis.Geo();
+            if (clones == null)
+            { Console.WriteLine("No clones found"); }
+            else
+            {
+                foreach (var clone in clones)
+                {
+                    Console.WriteLine(clone.Name);
+                }
+            }
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Back[Backspace]");
             Console.WriteLine("Main Menu[Esc]");
-
+            
 
             while (true)
             {
@@ -798,11 +857,21 @@ namespace HXD4UK_HSZF_2024251
         }
 
         //clonesparty
-
         public void ClonesParty(KlonokHaborujadbcontext klonokHaborujadbcontext)
         {
             Console.Clear();
-            CloneParty.Party();
+            
+            List<Clones> clones= CloneParty.Party();
+            if (clones[0] != null && clones[1] != null)
+            {
+                Console.WriteLine($"The clones who participated in the most battles together are:");
+                Console.WriteLine($"Clone 1: {clones[0].Name} ({clones[0].Id})");
+                Console.WriteLine($"Clone 2: {clones[1].Name} ({clones[1].Id})");
+            }
+            else
+            {
+                Console.WriteLine("No clones have participated in battles together.");
+            }
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Back[Backspace]");

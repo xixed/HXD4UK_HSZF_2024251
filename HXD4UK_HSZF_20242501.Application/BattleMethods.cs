@@ -10,37 +10,35 @@ using System.Threading.Tasks;
 
 namespace HXD4UK_HSZF_20242501.Application
 {
-   
+    public interface IBattleMethods
+    {
+        List<Battles> Data();
+        void Add();
+        void Remove();
+        void Update();
+
+    }
 
 
-    public class BattleMethods
+    public class BattleMethods : IBattleMethods
     {
         IKlonokHaborujadbcontext klonokHaborujadbcontext;
         IWrongInput WrongInput;
-        
+        IInputReader InputReader;
 
-        public BattleMethods(IKlonokHaborujadbcontext klonokHaborujadbcontext,IWrongInput wrongInput)
+
+
+        public BattleMethods(IKlonokHaborujadbcontext klonokHaborujadbcontext, IWrongInput wrongInput, IInputReader inputReader)
         {
-            this.klonokHaborujadbcontext=klonokHaborujadbcontext;
+            this.klonokHaborujadbcontext = klonokHaborujadbcontext;
             this.WrongInput = wrongInput;
+            InputReader = inputReader;
         }
 
-        public void Data()
+        public List<Battles> Data()
         {
             var battles = klonokHaborujadbcontext.Battles.ToList();
-
-            Console.WriteLine("Names".PadLeft(20) + "Location".PadLeft(30) + "Date".PadLeft(30) + "Clones".PadLeft(30));
-            Console.WriteLine();
-
-            foreach (var item in battles)
-            {
-
-                Console.WriteLine($"{item.Name.PadLeft(20)}{item.Location.PadLeft(30)}{item.Date.PadLeft(30)}{string.Join(",", item.Clones).PadLeft(30)}");
-
-
-
-            }
-            Console.WriteLine();
+            return battles;
         }
 
         
@@ -195,7 +193,7 @@ namespace HXD4UK_HSZF_20242501.Application
             bool isparsed;
             while (true)
             {
-                string str = Console.ReadLine();
+                string str = WrongInput.STR();
                 isparsed = int.TryParse(str, out index);
                 if (!isparsed)
                 {
@@ -220,7 +218,7 @@ namespace HXD4UK_HSZF_20242501.Application
             Console.WriteLine();
             while (true)
             {
-                var key = Console.ReadKey(true).Key;
+                var key = InputReader.ReadKey(true);
 
                 if (key == ConsoleKey.D1)
                 {

@@ -9,9 +9,14 @@ namespace HXD4UK_HSZF_20242501.Test
 {
     internal class Fake_WrongInput : IWrongInput
     {
+        
+        public Queue<string> NextInputs { get; set; } = new Queue<string>();
+
         public string STR()
         {
-            return "asd";
+            var input =NextInputs.Dequeue();
+            
+            return input;
         }
     }
 }

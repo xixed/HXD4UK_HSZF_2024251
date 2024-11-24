@@ -9,7 +9,11 @@ using System.Threading.Tasks;
 
 namespace HXD4UK_HSZF_20242501.Application
 {
-    public class CloneParty
+    public interface ICloneParty
+    {
+        List<Clones> Party();
+    }
+    public class CloneParty : ICloneParty
     {
         public IKlonokHaborujadbcontext KlonokHaborujadbcontext;
 
@@ -17,7 +21,7 @@ namespace HXD4UK_HSZF_20242501.Application
         {
             KlonokHaborujadbcontext = klonokHaborujadbcontext;
         }
-        public void Party()
+        public List<Clones> Party()
         {
 
             var cloneBattles = KlonokHaborujadbcontext.Clones
@@ -46,18 +50,12 @@ namespace HXD4UK_HSZF_20242501.Application
                     }
                 }
             }
-
-            if (clone1 != null && clone2 != null)
-            {
-                Console.WriteLine($"The clones who participated in the most battles together are:");
-                Console.WriteLine($"Clone 1: {clone1.Name} ({clone1.Id})");
-                Console.WriteLine($"Clone 2: {clone2.Name} ({clone2.Id})");
-                Console.WriteLine($"They participated in {maxSharedBattles} battles together.");
-            }
-            else
-            {
-                Console.WriteLine("No clones have participated in battles together.");
-            }
+            List<Clones> clones = new List<Clones>();
+            clones.Add(clone1);
+            clones.Add(clone2);
+            return clones;
+            
+            
 
         }
     }

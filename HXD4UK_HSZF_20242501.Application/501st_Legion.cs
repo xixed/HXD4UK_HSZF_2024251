@@ -1,4 +1,5 @@
-﻿using HXD4UK_HSZF_20242501.Persistence.MsSql;
+﻿using HXD4UK_HSZF_20242501.Model;
+using HXD4UK_HSZF_20242501.Persistence.MsSql;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,16 @@ using System.Threading.Tasks;
 
 namespace HXD4UK_HSZF_20242501.Application
 {
-    public class _501st_Legion
+    public interface I_501st_Legion
     {
-        IKlonokHaborujadbcontext klonokHaborujadbcontext;
+        List<Clones> _501_Legion();
+        List<Battles> _3_Atleast();
+
+    }
+    public class _501st_Legion : I_501st_Legion
+    {
+        IKlonokHaborujadbcontext klonokHaborujadbcontext { get; set; }
+
 
         public _501st_Legion(IKlonokHaborujadbcontext klonokHaborujadbcontext) 
         {
@@ -21,30 +29,26 @@ namespace HXD4UK_HSZF_20242501.Application
 
         
 
-        public void _501_Legion()
+        public List<Clones> _501_Legion()
         {
             var clones = klonokHaborujadbcontext.Clones.Where(clone=>clone.Squad.Name=="501st Legion").ToList();
-
-            if (clones.Count == 0)
-            {
-                Console.WriteLine("There are no '501st Legion' squad in the database");
-            }
-            else { foreach (var clone in clones) { Console.WriteLine(clone.Name); } }
+            return clones;
+            
         }
 
-        public void _3_Atleast()
+        public List<Battles> _3_Atleast()
         {
 
             var legion = klonokHaborujadbcontext.Squads.FirstOrDefault(b => b.Name == "501st Legion");
 
             if (legion == null)
             {
-                Console.WriteLine("There are no '501st Legion' squad in the database");
+                return new List<Battles>();
             }
             else
             {
                 var battlesWith501st = klonokHaborujadbcontext.Battles;
-                
+                List<Battles> battles = new List<Battles>();
                 foreach (var item in battlesWith501st)
                 {
                     int n = 0;
@@ -52,9 +56,9 @@ namespace HXD4UK_HSZF_20242501.Application
 
                     foreach (var item1 in clones)
                     {
-                        var squad=klonokHaborujadbcontext.Clones.Find(item1);
-                        
-                        if(squad.Squad.Name=="501st Legion")
+                        var squad = klonokHaborujadbcontext.Clones.Find(item1);
+
+                        if (squad.Squad.Name == "501st Legion")
                         {
                             n++;
                         }
@@ -62,11 +66,14 @@ namespace HXD4UK_HSZF_20242501.Application
 
                     if (n >= 3)
                     {
-                        Console.WriteLine(item.Name);
+                        battles.Add(item);
                     }
-                    
+
+
                 }
-            } 
+                return battles;
+            }
+            
         }
     }
 }

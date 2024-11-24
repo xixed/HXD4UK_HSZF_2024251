@@ -37,12 +37,12 @@ namespace HXD4UK_HSZF_20242501.Test
         }
         public int SaveChanges()
         {
-            return 0;
+            return context.SaveChanges();
         }
 
         public void OnCloneAdded(Clones clone)
         {
-            throw new NotImplementedException();
+            cloneAdded?.Invoke(this, clone);
         }
     }
 }

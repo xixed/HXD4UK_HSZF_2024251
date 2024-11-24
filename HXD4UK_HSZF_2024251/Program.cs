@@ -1,4 +1,5 @@
-﻿using HXD4UK_HSZF_20242501.Application;
+﻿
+using HXD4UK_HSZF_20242501.Application;
 using HXD4UK_HSZF_20242501.Model;
 using HXD4UK_HSZF_20242501.Persistence.MsSql;
 using Microsoft.EntityFrameworkCore;
@@ -71,16 +72,17 @@ namespace HXD4UK_HSZF_2024251
             return
                 services
                 .AddDbContext<IKlonokHaborujadbcontext,KlonokHaborujadbcontext>(options => options.UseSqlServer(connection))
-                .AddSingleton<CloneEventHandler>()
-                .AddSingleton<BattleMethods>()
-                .AddSingleton<CloneMethods>()
-                .AddSingleton<SquadMethods>()
-                .AddSingleton<Biggest>()
-                .AddSingleton<AllDataQuerie>()
-                .AddSingleton<_501st_Legion>()
-                .AddSingleton<Kamino>()
-                .AddSingleton<Geonosis>()
-                .AddSingleton<CloneParty>()
+                .AddSingleton<ICloneEventHandler,CloneEventHandler>()
+                .AddSingleton<IBattleMethods,BattleMethods>()
+                .AddSingleton<ICloneMethods,CloneMethods>()
+                .AddSingleton<IInputReader,InputReader>()
+                .AddSingleton<ISquadMethods,SquadMethods>()
+                .AddSingleton<IBiggest,Biggest>()
+                .AddSingleton<IAllDataQuerie,AllDataQuerie>()
+                .AddSingleton<I_501st_Legion,_501st_Legion>()
+                .AddSingleton<IKamino,Kamino>()
+                .AddSingleton<IGeonosis,Geonosis>()
+                .AddSingleton<ICloneParty,CloneParty>()
                 .AddSingleton<Menu>()
                 .AddSingleton<IWrongInput,WrongInput>()
                 .BuildServiceProvider();

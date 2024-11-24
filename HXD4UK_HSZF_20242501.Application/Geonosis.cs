@@ -8,40 +8,38 @@ using System.Threading.Tasks;
 
 namespace HXD4UK_HSZF_20242501.Application
 {
-    public class Geonosis
+    public interface IGeonosis
+    {
+        List<Clones> Geo();
+    }
+    public class Geonosis : IGeonosis
     {
 
         public IKlonokHaborujadbcontext klonokHaborujadbcontext;
 
         public Geonosis(IKlonokHaborujadbcontext klonokHaborujadbcontext) { this.klonokHaborujadbcontext = klonokHaborujadbcontext; }
 
-        public void Geo()
+        public List<Clones> Geo()
         {
 
             var geonosisClones = klonokHaborujadbcontext.Clones.Where(clone => clone.Squad.Name == "212th Attack Battalion");
             if (geonosisClones ==null)
             {
                 Console.WriteLine("There are no clone in the '212th Attack Battalion' squad");
+                return new List<Clones>();
             }
-            foreach (var clone in geonosisClones)
-            {
-                for (int i = 0; i < geonosisClones.Count(); i++)
-                {
-                    var battleG = klonokHaborujadbcontext.Battles.FirstOrDefault(battle => battle.Name == "Battle of Geonosis");
-                    if (battleG == null)
-                    {
-                        Console.WriteLine("There are no 'Battle of Geonosis' battle in the database");
-                    }
-                    else
-                    {
-                        if (battleG.Clones[i] == clone.Id)
-                        {
-                            Console.WriteLine($"Name: {clone.Name} ");
-                        }
-                    }
-                }
 
+            var battleG = klonokHaborujadbcontext.Battles.FirstOrDefault(battle => battle.Name == "Battle of Geonosis");
+            if (battleG == null)
+            {
+                Console.WriteLine("There are no 'Battle of Geonosis' battle in the database");
+                return new List<Clones>();
             }
+
+            var clonesInBattle = geonosisClones.Where(clone => clone.Battlestoclones.Any(bc => bc.BattleId == battleG.Id)).ToList();
+
+            return clonesInBattle;
+            
             
             
 
