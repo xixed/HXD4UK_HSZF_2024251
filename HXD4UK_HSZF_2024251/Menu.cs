@@ -785,7 +785,7 @@ namespace HXD4UK_HSZF_2024251
 
             var clones = Kamino.KaminoBattle();
 
-            if (clones.Count == null)
+            if (clones.Count == 0)
             {
                 Console.WriteLine("There are no 'Battle of Kamino' in the database");
             }
